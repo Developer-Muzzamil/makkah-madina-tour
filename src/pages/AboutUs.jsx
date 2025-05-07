@@ -214,6 +214,8 @@ function Aboutus() {
       <HeroSection
         title="Next Stop: Haramain"
         title2="Reconnect with Your Faith, Let Us Guide You"
+        title="Next Stop: Haramain"
+        title2="Reconnect with Your Faith, Let Us Guide You"
         subtitle="Begin your sacred journey with confidence, comfort, and care."
         backgroundImage="/images/umrah/about2.png"
       />
@@ -317,6 +319,7 @@ function Aboutus() {
           
         </div>
         <div className="text-center w-full max-w-7xl">
+          
           
           <PlacesCards places={hajjPackages} title="Hajj Packages" />
         </div>

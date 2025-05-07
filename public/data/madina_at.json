@@ -1,0 +1,50 @@
+[
+    {
+      "id": "dar-al-madinah-museum",
+      "title": "Dar al-Madinah Museum",
+      "shortDescription": "The Museum of Madinah Urban and Civilizational Heritage (opened 2011) showcasing Medina’s history from the Prophet’s.",
+      "fullDescription": "Dar al-Madinah Museum, inaugurated in 2011, is Medina’s first specialized museum dedicated to preserving and presenting the city’s rich Islamic and cultural heritage. Located in the Al-Mada'in district near the Quba Mosque, the museum offers a unique and immersive journey through the history of Medina, beginning from the pre-Islamic era and continuing into modern times. It features detailed exhibits that include life-size models of significant landmarks such as Masjid an-Nabawi in various historical stages, the Prophet Muhammad’s ﷺ home and surroundings, and important scenes from his life. The museum also showcases a rare collection of Qur’anic manuscripts, tools, household items, and clothing from the early Islamic period, allowing visitors to visualize life as it was during the Prophet’s time.",
+      "fullDescription2":"One of the museum’s standout features is its chronological layout, which allows visitors to follow the city’s urban, cultural, and religious transformation from the 7th century onward. The exhibits use interactive elements, including guided tours, multimedia presentations, and scaled architectural models, to engage visitors and deepen their understanding of Medina's legacy. Scholars and researchers consider Dar al-Madinah a vital educational center, especially for those interested in Seerah (the biography of the Prophet ﷺ) and Islamic civilization. By blending modern museum techniques with historical accuracy, the museum successfully bridges the past and present, helping visitors from around the world connect with the spiritual and historical significance of the Prophet’s city.",
+      "image": "../images/madina/daralmadinahmuseum/daralmadinahmuseum1.jpg",
+      "heroImage": "../images/madina/daralmadinahmuseum/daralmadinahmuseum2.jpg",
+      "gallery": ["../images/madina/daralmadinahmuseum/daralmadinahmuseum3.jpg","../images/madina/daralmadinahmuseum/daralmadinahmuseum4.jpg","../images/madina/daralmadinahmuseum/daralmadinahmuseum5.jpg","../images/madina/daralmadinahmuseum/daralmadinahmuseum6.jpg","../images/madina/daralmadinahmuseum/daralmadinahmuseum1.jpg"]
+    },
+    {
+      "id": "dates-market",
+      "title": "Medina Dates Market (Souq al-Atṭār)",
+      "shortDescription": "A bustling market near the Prophet’s Mosque selling premium local dates (especially Ajwa) and Islamic prayer items.",
+      "fullDescription": "Just outside the mosque, the Date Market (Souq al-Atṭār) is a lively traditional bazaar. Vendors here sell Medina’s famous dates – notably sweet Ajwa and Sukkari varieties – along with nuts, spices, and religious souvenirs. Ajwa dates are particularly prized: the Prophet ﷺ said eating seven Ajwa dates every morning protects one for the day. Shoppers also find prayer beads, small Qur’ans, and fragrances. The market’s vibrant atmosphere reflects Medina’s hospitality culture.",
+      "image": "../images/madina/datesmarket/datesmarket1.jpg",
+      "heroImage": "../images/madina/datesmarket/datesmarket2.jpg",
+      "gallery": ["../images/madina/datesmarket/datesmarket3.jpg","../images/madina/datesmarket/datesmarket4.jpg","../images/madina/datesmarket/datesmarket5.jpg","../images/madina/datesmarket/datesmarket6.jpg"]
+    },
+    {
+      "id": "king-fahd-quran-printing",
+      "title": "King Fahd Quran Printing Complex",
+      "shortDescription": "The government-run printing complex (founded 1985) in Medina that produces millions of copies of the Qur’an in Arabic and many languages",
+      "fullDescription":"The King Fahd Complex for the Printing of the Holy Qur’an, founded in 1985 in Medina, is the world’s largest Qur’an printing facility and a major hub for the global distribution of the Islamic holy book. Covering over 250,000 square meters, the complex is named after King Fahd bin Abdulaziz, who envisioned a center dedicated to preserving and spreading the Qur’an. It has printed more than 128 million copies of the standard Medina Mushaf, known for its precise Uthmani script and elegant calligraphy, which has become the globally recognized version of the Qur’an. In addition to Arabic editions, the complex produces translations in over 70 languages, ensuring access to the Qur’an for diverse Muslim communities worldwide. The facility houses printing presses, quality control labs, a research center, and a dedicated calligraphy department that upholds the highest standards of accuracy and aesthetics. The complex also runs a popular online Qur’an platform, allowing digital access to various editions and translations. Guided tours can be arranged, offering visitors insight into the meticulous process behind the printing and preservation of the Qur’an, further reinforcing Medina’s role as a spiritual and scholarly beacon in the Muslim world.",
+      "image": " ../images/madina/kingfahdquranprinting/kingfahdquranprinting1.jpg",
+      "heroImage": " ../images/madina/kingfahdquranprinting/kingfahdquranprinting1.jpg",
+      "gallery": [" ../images/madina/kingfahdquranprinting/kingfahdquranprinting2.jpg"," ../images/madina/kingfahdquranprinting/kingfahdquranprinting3.jpg"," ../images/madina/kingfahdquranprinting/kingfahdquranprinting4.jpg"," ../images/madina/kingfahdquranprinting/kingfahdquranprinting5.jpg"]
+    },
+    {
+      "id": "shopping-areas",
+      "title": "Shopping Areas (Taiba Center, etc.)",
+      "shortDescription": "Commercial hubs near the mosque such as Taiba Center (Gate 20) offering souvenirs, abayas, perfumes, and daily necessities.",
+      "fullDescription": "Medina’s bustling main shopping district, centered around Masjid an-Nabawi, offers a vibrant mix of traditional and modern retail experiences tailored to pilgrims and visitors. One of the key hubs is the Taiba Commercial Center, located just outside Gate 20 of the mosque, which houses hundreds of shops on multiple levels, ranging from affordable stalls to branded outlets. Surrounding streets and alleyways are lined with open-air souks and shopping arcades offering everything from Islamic books, prayer rugs, and tasbeeh beads to locally made goods like dates (especially Ajwa), miswak sticks, oud perfumes, and gold jewelry. Clothing stores sell a wide variety of abayas, jilbabs, hijabs, and men's thawbs in various styles and price ranges. Small electronics, luggage, watches, and travel essentials are also widely available, catering to the practical needs of pilgrims. The area stays lively well into the night, especially after evening and Taraweeh prayers, with food vendors, street stalls, and cafés creating a welcoming, communal atmosphere where the spiritual and social aspects of pilgrimage blend seamlessly with commerce.",
+      "image": " ../images/madina/ShoppingAreas/ShoppingAreas1.jpg",
+      "heroImage": " ../images/madina/ShoppingAreas/ShoppingAreas1.jpg",
+      "gallery": [" ../images/madina/ShoppingAreas/ShoppingAreas2.jpg"," ../images/madina/ShoppingAreas/ShoppingAreas3.jpg"," ../images/madina/ShoppingAreas/ShoppingAreas4.jpg"," ../images/madina/ShoppingAreas/ShoppingAreas5.jpg"," ../images/madina/ShoppingAreas/ShoppingAreas6.jpg"]
+    },
+    {
+      "id": "mount-uhud-visitor-area",
+      "title": "Mount Uhud Visitor Area",
+      "shortDescription": "Recreational park and museum at the foot of Mount Uhud, commemorating the Battle of Uhud with paths, displays, and memorials.",
+      "fullDescription": "Located at the base of the historic Mount Uhud, the Uhud Visitor Complex has been thoughtfully developed to serve both as a memorial site and an educational destination for pilgrims and tourists. This area commemorates the Battle of Uhud, the second major battle in Islamic history, fought in 625 CE between the Muslims of Madinah and the Quraysh of Makkah. The complex features shaded walkways, seating areas, and well-maintained gardens, providing a peaceful environment for reflection. Informational panels and exhibits throughout the park narrate the events of the battle, highlight key strategic moments, and pay tribute to the sacrifices made by the early Muslim community. A small museum further enriches the experience with artifacts, battle maps, and multimedia presentations that offer historical context and honor the legacy of the fallen..",
+      "fullDescription2":"ne of the most sacred parts of the site is the Sayyid Ash-Shuhadāʾ Mosque, also known as Hamza Mosque, which marks the burial place of Hamza ibn Abdul Muttalib, the Prophet Muhammad’s ﷺ uncle and a revered martyr of Islam, along with around 70 other companions who were martyred in the battle. The graves are located behind a protective enclosure near the mosque, and visitors often pause here for prayers and to reflect on the sacrifice made by these early Muslims. Walking trails from the visitor area lead partway up Mount Uhud, offering panoramic views of Madinah and a physical connection to the terrain where the battle occurred. The site's combination of spirituality, history, and natural beauty makes it one of the most important and emotionally powerful landmarks in Madinah, allowing visitors to engage deeply with the legacy of the Prophet’s ﷺ companions and the early struggles of Islam.",
+      "image": " ../images/madina/mountuhudvisitorarea/mountuhudvisitorarea1.jpg",
+      "heroImage": " ../images/madina/mountuhudvisitorarea/mountuhudvisitorarea1.jpg",
+      "gallery": [" ../images/madina/mountuhudvisitorarea/mountuhudvisitorarea2.jpg"," ../images/madina/mountuhudvisitorarea/mountuhudvisitorarea4.jpg"," ../images/madina/mountuhudvisitorarea/mountuhudvisitorarea5.jpg"," ../images/madina/mountuhudvisitorarea/mountuhudvisitorarea6.jpg"," ../images/madina/mountuhudvisitorarea/mountuhudvisitorarea3.jpg"]
+    }
+  ]
+  
