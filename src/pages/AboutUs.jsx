@@ -5,38 +5,139 @@ import {
   Card,
   PlacesCards,
   ContactUs,
-  EnquiryForm
+  EnquiryForm,
+  CardE,
+  ExpandableCard
 } from "../components/PageComponent";
+import { FaPlaceOfWorship } from "react-icons/fa";
 
-// Use public image
+const descrin = `
+NextStop: Haramain is your trusted partner for spiritually enriching journeys to the sacred cities of Makkah and Madina. We specialize in organizing Hajj and Umrah tours with a deep commitment to comfort, convenience, and a profound spiritual experience.
 
-const packagesData = [
-  {
-    image: "/images/umrah/umrahstd.jpg",
-    title: "Umrah Package – Standard",
-    description:
-      "7-day stay, 3-star hotel, guided ziyarah, transportation included.",
-  },
-  {
-    image: "/images/umrah/umrahpre.webp",
-    title: "Umrah Package – Premium",
-    description:
-      "10-day stay, 5-star hotel near Haram, VIP services, and meals.",
-  },
-  {
-    image: "/images/hajj1/hajjstd.jpg",
-    title: "Hajj Package – Economy",
-    description:
-      "Economical Hajj with group guidance, 14 days, shared rooms.",
-  },
-  {
-    image: "/images/hajj1/hajjpre.jpg",
-    title: "Hajj Package – Deluxe",
-    description:
-      "Luxury accommodation, private transport, scholar-led journey.",
-  },
-];
+Rooted in a passion for serving the guests of Allah, our mission is simple — to make your pilgrimage smooth, memorable, and deeply meaningful. Whether you're embarking on Hajj, performing Umrah, or exploring the rich Islamic heritage of the Haramain, we're here to guide you every step of the way.
 
+What We Offer:
+• Tailored Hajj & Umrah Packages that suit all budgets and needs
+• Expert Guidance & Support throughout your spiritual journey
+• Detailed Information & Travel Tips for nearby historical and religious sites
+• Seamless Logistics – from visa processing to comfortable accommodations and local transport
+
+With a knowledgeable team and local partnerships, we ensure that you not only fulfill your religious duties but also explore the stories and significance behind the landmarks of Makkah and Madina.
+
+At NextStop: Haramain, we believe that every pilgrim deserves peace of mind and a journey that brings them closer to their faith. Let us be your companion on this sacred path.
+`;
+
+const umrahPackages = [
+    {
+      id: 1,
+      tier: "🥈 Silver Umrah Package",
+      name: "Basic Blessings",
+      description: "Ideal for budget-conscious pilgrims.",
+      duration: "10 Days (5 Makkah + 5 Madinah)",
+      makkahHotel: "Al Kiswah Towers or similar (3-star, ~900m from Haram)",
+      madinahHotel: "Al Mukhtara International or similar (3-star, ~700m from Prophet’s Mosque)",
+      transport: "Shared AC Bus",
+      meals: "No meals / optional breakfast add-on",
+      ziyarat: "Basic local tour included",
+      visaAndInsurance: "Included",
+      groupSize: "30–40 people",
+      extras: ["Zamzam water (5L)", "Umrah Guidebook"],
+      startingPrice: "$950 USD per person"
+    },
+    {
+      id: 2,
+      tier: "🥇 Gold Umrah Package",
+      name: "Comfort & Barakah",
+      description: "Balanced experience with comfort and convenience.",
+      duration: "12 Days (6 Makkah + 6 Madinah)",
+      makkahHotel: "Dar Al Eiman Grand or similar (4-star, ~500m from Haram)",
+      madinahHotel: "Al Eiman Taibah or similar (4-star, ~300m from Masjid an-Nabawi)",
+      transport: "Semi-private van / luxury bus",
+      meals: "Daily Breakfast + Dinner",
+      ziyarat: "Guided tours in both cities",
+      visaInsuranceSim: "Included",
+      groupSize: "15–25 people",
+      extras: ["Laundry (3 times)", "Prayer mat gift"],
+      startingPrice: "$1,750 USD per person"
+    },
+    {
+      id: 3,
+      tier: "💎 Diamond Umrah Package",
+      name: "Premium Serenity",
+      description: "Luxury for pilgrims who seek peace and personalized care.",
+      duration: "14 Days (7 Makkah + 7 Madinah)",
+      makkahHotel: "Swissotel / Hilton Suites (5-star, 100m or less from Haram)",
+      madinahHotel: "Anwar Al Madinah Mövenpick / Frontel Al Harithia (5-star, <100m)",
+      transport: "Private luxury SUV / chauffeured service",
+      meals: "All meals included (5-star buffet)",
+      ziyarat: "Private guided tour with historian guide",
+      visaInsuranceVIP: "Included",
+      groupSize: "Private / Family-based",
+      extras: [
+        "Complimentary Ihram kit",
+        "Gift bag",
+        "Laundry service",
+        "Zamzam pack",
+        "Priority check-in"
+      ],
+      startingPrice: "$3,200 USD per person"
+    }
+  ];
+  
+  const hajjPackages = [
+    {
+      id: "hajj-silver",
+      tier: "🥈 Silver",
+      name: "Hajj Package – Essential Journey",
+      description: "Affordable option for fulfilling your Hajj with necessary services.",
+      duration: "35–40 Days (Long Stay)",
+      makkahHotel: "3-star, 1.5–2 km from Haram (e.g., Al Kiswah Towers)",
+      madinahHotel: "3-star, 500–800m from Masjid an-Nabawi",
+      minaArafat: "Standard tents (shared), mats & basic cooling",
+      meals: "Breakfast only in hotels, Maktab-provided meals in Mina/Arafat",
+      transport: "Air-conditioned buses (group transport)",
+      ziyarat: "Group tours in Makkah & Madinah",
+      visaAndInsurance: "Visa, Insurance, and Hajj ID included",
+      groupSize: "40–50 pilgrims",
+      extras: ["Ihram", "Hajj guidebook", "Zamzam water"],
+      startingPrice: "$6,500 – $7,500 USD per person"
+    },
+    {
+      id: "hajj-gold",
+      tier: "🥇 Gold",
+      name: "Hajj Package – Balanced & Comfortable",
+      description: "Comfort-focused Hajj without luxury costs.",
+      duration: "20–25 Days",
+      makkahHotel: "4-star, 500–700m from Haram (e.g., Dar Al Eiman Grand)",
+      madinahHotel: "4-star, 300–400m from Masjid an-Nabawi",
+      minaArafat: "Upgraded air-conditioned tents with mattress/sofa beds",
+      meals: "Breakfast & Dinner included, buffet meals in Mina/Arafat",
+      transport: "Private group van or deluxe bus with fixed slots",
+      ziyarat: "Guided with scholars",
+      visaInsuranceSim: "Visa, Insurance & SIM included",
+      groupSize: "20–30 pilgrims",
+      extras: ["Ihram kit", "Prayer rug", "Zamzam", "Laundry x2"],
+      startingPrice: "$9,000 – $11,000 USD per person"
+    },
+    {
+      id: "hajj-diamond",
+      tier: "💎 Diamond",
+      name: "Hajj Package – VIP Spiritual Excellence",
+      description: "Top-tier luxury Hajj with comfort, convenience, and peace of mind.",
+      duration: "14–18 Days (Short Stay / Express Hajj)",
+      makkahHotel: "5-star (e.g., Swissotel, Conrad), <200m from Haram",
+      madinahHotel: "5-star (e.g., Oberoi, Mövenpick), <150m from Masjid",
+      minaArafat: "VIP tents with private AC, beds, carpeted floors, buffet meals",
+      meals: "All-inclusive gourmet (buffet) meals throughout",
+      transport: "Private car / luxury coach / fast-track shuttle",
+      ziyarat: "Private guided with multi-lingual scholars",
+      visaInsuranceVIP: "Visa, Insurance, VIP Processing, SIM, Porter all included",
+      groupSize: "8–15 (Family or elite groups)",
+      extras: ["Ihram luxury kit", "Premium gift box", "Concierge", "Zamzam 10L pack"],
+      startingPrice: "$13,000 – $18,000+ USD per person"
+    }
+  ];
+  
 // Scroll-triggered visibility hook
 function useIsVisible(ref) {
   const [isVisible, setIsVisible] = useState(false);
@@ -106,108 +207,127 @@ function TestimonialsSection() {
   );
 }
 
-// Team section
-function TeamSection() {
-  const team = [
-    {
-      name: "Sufiyan Khan",
-      title: "TL",
-      img: "https://via.placeholder.com/150",
-    },
-    {
-      name: "Sameer",
-      title: "Web Developer",
-      img: "https://via.placeholder.com/150",
-    },
-    {
-      name: "Hafeez",
-      title: "Backend Developer",
-      img: "https://via.placeholder.com/150",
-    },
-    {
-      name: "Muzzamil",
-      title: "Application Architect",
-      img: "https://via.placeholder.com/150",
-    },
-  ];
-
-  return (
-    <section className="py-16 bg-gray-50">
-      <h2 className="text-3xl font-bold mb-8 text-center">Meet Our Team</h2>
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-        {team.map((m, i) => (
-          <AnimatedContainer key={i}>
-            <div className="text-center">
-              <img
-                src={m.img}
-                alt={m.name}
-                className="mx-auto w-32 h-32 rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
-              />
-              <h3 className="mt-4 text-xl font-semibold">{m.name}</h3>
-              <p className="text-gray-600">{m.title}</p>
-            </div>
-          </AnimatedContainer>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-// Filter data
-const umrahPackages = packagesData.filter((pkg) =>
-  pkg.title.toLowerCase().includes("umrah")
-);
-const hajjPackages = packagesData.filter((pkg) =>
-  pkg.title.toLowerCase().includes("hajj")
-);
-
 // Main component
 function Aboutus() {
   return (
     <>
       <HeroSection
-        title="Reconnect with Your Faith, Let Us Guide You"
+        title="Next Stop: Haramain"
+        title2="Reconnect with Your Faith, Let Us Guide You"
         subtitle="Begin your sacred journey with confidence, comfort, and care."
-        backgroundImage="/images/umrah/about2.jpg"
+        backgroundImage="/images/umrah/about2.png"
       />
 
-      <ImageTextSection
-        title="About Us"
-        description="At Next Stop: Haramain, we believe every pilgrimage should be spiritually fulfilling and stress-free. 
-        We provide personalized Umrah and Hajj packages designed to cater to your spiritual and travel needs. 
-        Our mission is to simplify your journey so you can focus on your faith."
-        colorScheme="alt"
-      />
 
-      <div className="bg-gray-100 py-12 px-4 md:px-12 text-center">
-        <h2 className="text-3xl font-bold mb-8">Our Vision & Mission</h2>
+<ImageTextSection
+      title="About Us"
+      colorScheme="alt"
+      description={
+        <>
+          <span className="mb-4">
+            NextStop: Haramain is your trusted partner for spiritually enriching
+            journeys to the sacred cities of Makkah and Madina. We specialize in
+            organizing Hajj and Umrah tours with a deep commitment to comfort,
+            convenience, and a profound spiritual experience.
+          </span>
+
+          <span className="mb-4">
+            Rooted in a passion for serving the guests of Allah, our mission is
+            simple — to make your pilgrimage smooth, memorable, and deeply meaningful.
+            Whether you're embarking on Hajj, performing Umrah, or exploring the
+            rich Islamic heritage of the Haramain, we're here to guide you every step of the way.
+          </span>
+
+          <p className="mb-4">
+  <span className="font-semibold mt-4">What We Offer:</span>
+</p>
+<ul className="list-disc list-inside mb-4">
+  <li>Tailored Hajj & Umrah Packages that suit all budgets and needs</li>
+  <li>Expert Guidance & Support throughout your spiritual journey</li>
+  <li>
+    Detailed Information & Travel Tips for nearby historical and religious sites
+  </li>
+  <li>
+    Seamless Logistics – from visa processing to comfortable accommodations and local transport
+  </li>
+</ul>
+
+          <p className="mb-4">
+            With a knowledgeable team and local partnerships, we ensure that you not
+            only fulfill your religious duties but also explore the stories and significance
+            behind the landmarks of Makkah and Madina.
+          </p>
+
+          <p>
+            At NextStop: Haramain, we believe that every pilgrim deserves peace of
+            mind and a journey that brings them closer to their faith. Let us be
+            your companion on this sacred path.
+          </p>
+        </>
+      }
+    />
+
+
+    
+
+<div className="bg-gray-100 py-12 px-4 md:px-12 text-center">
+        <h2 className="text-5xl font-bold mb-8">Our Vision & Mission</h2>
         <div className="flex md:flex justify-center gap-6 flex-wrap">
           <Card
             title="Our Vision"
             description="To be the leading provider of spiritually enriching, hassle-free journeys to Makkah and Madinah."
             link="#"
+            image='/images/umrah/umrahstd.jpg'
           />
           <Card
             title="Our Mission"
             description="To offer personalized pilgrimage packages with a focus on customer satisfaction, safety, and a transformative spiritual experience."
             link="#"
+            image={'/images/hajj/dua.png'}
           />
         </div>
       </div>
+<div className="bg-gray-100 py-12 px-4 md:px-12 flex flex-col items-center space-y-12">
+  <div className="text-center w-full max-w-7xl">
+    <CardE title="Umrah Packages" places={umrahPackages} />
+  </div>
 
-      <div className="bg-gray-100 py-12 px-4 md:px-12 flex flex-col items-center space-y-12">
+  <div className="text-center w-full max-w-7xl">
+    <CardE title="Hajj Packages" places={hajjPackages} description />
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      {/* <div className="bg-gray-100 py-12 px-4 md:px-12 flex flex-col items-center space-y-12">
         <div className="text-center w-full max-w-7xl">
-          <PlacesCards places={umrahPackages} title="Umrah Packages" />
+          <PlacesCards places={umrahPackages} title="Umrah Packages" image="" />
+          
         </div>
         <div className="text-center w-full max-w-7xl">
+          
           <PlacesCards places={hajjPackages} title="Hajj Packages" />
         </div>
-      </div>
-      <EnquiryForm packageId="umrah2095"/>
+      </div> */}
       <TestimonialsSection />
-      <TeamSection />
+
+      <div id="contact-form">
       <ContactUs />
-{window.scrollTo(0, 0)}
+      </div>
+ 
+      {window.scrollTo(0, 0)}
 
     </>
   );

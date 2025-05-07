@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import {HomePage} from './pages/HomePage';
-
+import { ScrollToHashElement } from "./components/PageComponent";
 import MakkahPage from './pages/MakkahPage';
 import MadinaPage from './pages/MadinaPage';
 import HajjPage  from './pages/Hajj'
@@ -15,7 +15,9 @@ function App() {
   return (
     <>
       <Navbar />
+      <ScrollToHashElement />
       <Routes>
+     
         <Route path="/home" element={  
           <>
           <HomePage />

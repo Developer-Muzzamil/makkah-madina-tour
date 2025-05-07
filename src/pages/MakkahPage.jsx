@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HeroSection, ImageTextSection, ExpandableCard } from "../components/PageComponent";
+import { HeroSection, ImageTextSection, ExpandableCard  } from "../components/PageComponent";
 import { FaMapMarkerAlt, FaMosque, FaKaaba, FaLandmark, FaStarOfDavid } from 'react-icons/fa';
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -69,7 +69,12 @@ const MakkahPage = () => {
             <ImageTextSection
               title="History of Makkah"
               image="/images/makkah/oldmakkah.webp" // Updated path
-              description={`Makkah’s historical roots extend deep into ancient times...`}
+              description={ [
+                "Makkah’s religious significance dates back to Prophet Ibrahim and his son Ismail, who are believed to have built the Kaaba as a house of monotheistic worship.",
+                "The Zamzam Well was discovered by Hajar when she searched for water in the desert, and it continues to provide water near the Kaaba.",
+                "Prophet Muhammad (PBUH) was born in Makkah in 570 CE, and the city is central to Islamic history as the site of early Quranic revelations.",
+                "After years of conflict, Prophet Muhammad (PBUH) peacefully conquered Makkah in 630 CE."
+              ]}
               colorScheme="alt"
             />
           )}
@@ -78,7 +83,14 @@ const MakkahPage = () => {
             <ImageTextSection
               title="Cultural and Spiritual Influence"
               image="/images/makkah/clock_tower.jpg" // Updated path
-              description={`The influence of Makkah extends far beyond its geographical boundaries...`}
+              description={[
+                "Makkah hosts Hajj and Umrah, drawing millions annually and serving as a symbol of Islamic unity and shared rituals.",
+                "Both Makkah and Madina have helped preserve classical Arabic, the language of the Qur'an, and spread Islamic customs globally.",
+                "The Kaaba in Makkah is the qibla for all Muslims, reinforcing a universal direction of prayer and unity.",
+                "Masjid an-Nabawi in Madina acts as a spiritual sanctuary and a model for community living in Islam.",
+                "The Prophet’s life in Madina laid the foundation for Islamic governance, ethics, and justice, still reflected in modern Muslim societies.",
+                "Visiting these cities strengthens Islamic identity and creates deep emotional and cultural bonds for Muslims worldwide."
+              ]}
               reverse={true}
             />
           )}
@@ -95,9 +107,11 @@ const MakkahPage = () => {
                   <div className="text-left mb-6">
                     <h3 className="text-xl font-semibold">Quick Facts</h3>
                     <ul className="list-disc list-inside mt-2">
-                      <li>Capacity: 1 million+ people</li>
-                      <li>Established in the 7th century</li>
-                      <li>Home to the Kaaba, the most sacred structure in Islam</li>
+                    <li className="pl-2 -indent-2">Makkah is the holiest city in Islam, located in present-day Saudi Arabia.</li>
+                    <li className="pl-[2.5ch] -indent-[2.5ch]">The sacred Zamzam Well is located near the Kaaba and provides water to pilgrims.</li>
+                    <li className="pl-2 -indent-2">Prophet Muhammad ﷺ was born in Makkah in 570 CE.</li>
+                    <li className="pl-[2.5ch] -indent-[2.5ch]">Muslims around the world face the Kaaba in Makkah during their daily prayers (qibla).</li>
+                    <li className="pl-2 -indent-2">Non-Muslims are not permitted to enter the city of Makkah.</li>
                     </ul>
                   </div>
                 }

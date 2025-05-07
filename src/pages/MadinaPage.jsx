@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { HeroSection, ImageTextSection, ExpandableCard } from '../components/PageComponent';
 import { FaMapMarkerAlt, FaMosque, FaKaaba, FaLandmark } from 'react-icons/fa';
 
 const menuItems = [
   { label: 'History', icon:<FaMapMarkerAlt/> },
   { label: 'Religious & Cultural Significance',icon:<FaMosque/> },
-  { label: 'Prophet’s Mosque',icon:<FaKaaba/> },
+  { label: '🕌Prophet’s Mosque',},
   { label: 'Attractions',icon:<FaLandmark/> },
   { label: 'Holy Sites',icon:<FaMapMarkerAlt/> },
 ];
@@ -52,26 +52,47 @@ const MadinaPage = () => {
           </div>
           </motion.nav>
 
+
+          <AnimatePresence mode="wait">
+        <motion.div
+          key={selected}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.5 }}
+          className="px-4 py-6 bg-white shadow-inner max-w-screen-xl mx-auto"
+        >
       {/* Dynamic Content Area */}
       <div className="px-4 py-6 bg-white shadow-inner max-w-screen-xl mx-auto">
         {selected === 'History' && (
           <ImageTextSection
             title="History of Madina"
-            image="/images/madina/history.jpg" // Updated path
-            description={`Before Islam, Madinah was known as Yathrib, an oasis city inhabited by Arab and Jewish tribes. In 622 CE, Prophet Muhammad ﷺ migrated to Yathrib, renamed it Madinah, and established the first Islamic state. Key events such as the drafting of the Constitution of Madinah and battles like Badr and Uhud shaped the Islamic era. After the Prophet's death, Madinah remained a symbol of Islamic unity and devotion.`}
-            colorScheme="alt"
-          />
+            image="/images/madina/history.jpg"
+            description={[
+    "Before Islam, Madinah was known as Yathrib, an oasis city inhabited by Arab and Jewish tribes.",
+    "In 622 CE, Prophet Muhammad ﷺ migrated to Yathrib, renamed it Madinah, and established the first Islamic state.",
+    "Key events such as the drafting of the Constitution of Madinah and battles like Badr and Uhud shaped the Islamic era.",
+    "After the Prophet's death, Madinah remained a symbol of Islamic unity and devotion."
+  ]}
+  colorScheme="alt"
+/>
         )}
         {selected === 'Religious & Cultural Significance' && (
           <ImageTextSection
             title="Religious Significance of Madina"
             image="/images/madina/masjid-al-nabawi.jpg" // Updated path
-            description={`Madinah is the second holiest city in Islam after Makkah. It is home to Al-Masjid an-Nabawi, the Prophet’s Mosque, where Prophet Muhammad ﷺ is buried. Muslims perform Ziyarat to visit his tomb, reflecting deep spiritual reverence. The city witnessed the birth of Islamic laws and community structure. Prayers in the Prophet’s Mosque carry multiplied rewards, making it a spiritual focal point for Muslims worldwide. Madinah is a melting pot of cultures due to the constant flow of pilgrims from around the world. It represents Islamic brotherhood and peace. The city's architectural style blends traditional Islamic motifs with modern elements. Educational institutions, religious centers, and the spirit of hospitality reflect its vibrant culture rooted in Islamic traditions.`}
+            description={[
+              "Madinah is the second holiest city in Islam, home to Al-Masjid an-Nabawi, where Prophet Muhammad ﷺ is buried.",
+              "The city is a spiritual focal point for Muslims, with prayers in the Prophet’s Mosque carrying multiplied rewards.",
+              "Prayers in the Prophet’s Mosque carry multiplied rewards, making it a spiritual focal point for Muslims worldwide.",
+              "Madinah reflects Islamic brotherhood, peace, and cultural diversity due to the constant flow of pilgrims.",
+              "Its architecture blends traditional Islamic motifs with modern elements, and it is a hub of educational and religious institutions."
+            ]}
             colorScheme="default"
           />
         )}
 
-        {selected === 'Prophet’s Mosque' && (
+        {selected === '🕌Prophet’s Mosque' && (
           <section className="bg-gray-100 p-6 rounded-lg shadow-md">
             <h2 className="text-2xl font-bold text-center mb-4">Al-Masjid an-Nabawi (The Prophet’s Mosque)</h2>
             <p className="text-center mb-4">
@@ -88,7 +109,11 @@ const MadinaPage = () => {
         {selected === 'Holy Sites' && (
           <ExpandableCard title="Holy Places in Madina" file="madina_hp" />
         )}
+
       </div>
+      </motion.div>
+      </AnimatePresence>
+
     </div>
   );
 };

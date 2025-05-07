@@ -20,7 +20,7 @@ useEffect(() => {
     <nav className="bg-black bg-opacity-80 shadow-md sticky top-0 z-50 py-2">
       <div className="w-full px-6 py-4 flex justify-between items-center">
         {/* Logo on the left */}
-        <img src="images/DarkLogocUT.PNG" alt="Logo" className="h-10 w-auto" />
+        <img src="images/ico/DarkLogocUT.PNG" alt="Logo" className="h-10 w-auto" />
 
         {/* Desktop Links in center */}
         <ul className="hidden md:flex gap-6 text-white font-medium mx-auto">
@@ -39,11 +39,13 @@ useEffect(() => {
         </ul>
 
         {/* Contact Us button on the right */}
-        <div className="hidden md:block">
-          <button className="text-white hover:scale-110 transition-transform">
+                  <NavLink
+            to="/about#contact-form"
+            className="text-white hover:scale-110 transition-transform"
+          >
             Contact Us
-          </button>
-        </div>
+          </NavLink>
+
 
         {/* Mobile Hamburger Icon */}
         <div className="md:hidden text-white">

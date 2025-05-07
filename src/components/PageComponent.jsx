@@ -1,8 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Button, FormLabel, TextField, TextareaAutosize, Box, Typography, Paper } from "@mui/material";
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { IoMdClose } from "react-icons/io";
 // import { HiOutlineMail } from "react-icons/hi"; // Icon for email
-import { motion } from "framer-motion";  // Import Framer Motion for animations
 const API_URL = import.meta.env.VITE_API_URL;
 import { Formik, Form, Field, ErrorMessage,useFormik} from "formik";
 import * as Yup from "yup";
@@ -14,6 +18,7 @@ import * as Yup from "yup";
 //herosection
 export const HeroSection = ({
   title,
+  title2,
   subtitle,
   backgroundImage,
   hadithText,
@@ -57,9 +62,12 @@ export const HeroSection = ({
           opacity,
         }}
       >
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white break-words">
+        <h1 className="text-4xl md:text-7xl font-bold mb-4 text-white break-words">
           {title}
         </h1>
+        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white break-words">
+          {title2}
+        </h2>
         <p className="text-lg md:text-xl text-white break-words">
           {subtitle}
         </p>
@@ -92,7 +100,7 @@ export const Card = ({
   return (
     <Link to={link} className="w-full sm:w-[300px] md:w-[350px] lg:w-[400px]">
       <motion.div
-        className={`bg-white shadow-lg rounded-2xl overflow-hidden transition-all h-[300px]`}
+        className="bg-white shadow-lg rounded-2xl overflow-hidden transition-all h-[300px]"
         whileHover={{
           scale: 1.05,
           boxShadow: "0 10px 20px rgba(0, 0, 0, 0.1)",
@@ -104,6 +112,7 @@ export const Card = ({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
+        {/* Image at the top */}
         {image && (
           <motion.img
             src={image}
@@ -114,9 +123,11 @@ export const Card = ({
             transition={{ duration: 0.5 }}
           />
         )}
+
+        {/* Title and description below image */}
         <div className={`p-4 ${minHeight}`}>
           <motion.h3
-            className="text-xl font-semibold mb-2"
+            className="text-2xl font-bold mb-2 text-gray-800"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
@@ -124,18 +135,20 @@ export const Card = ({
             {title}
           </motion.h3>
           <motion.p
-            className="text-gray-600 text-sm"
+            className="text-base text-gray-600"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
             {description}
+
           </motion.p>
         </div>
       </motion.div>
     </Link>
   );
 };
+
 
 //section for displaying an image and text side by side
 export const ImageTextSection = ({
@@ -206,11 +219,20 @@ export const ImageTextSection = ({
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <p
-            className={`leading-relaxed text-justify ${textColor} whitespace-normal`}
-          >
+          {/* <p className={`leading-relaxed text-justify ${textColor} whitespace-normal`}>
             {description}
-          </p>
+          </p> */}
+          {Array.isArray(description) ? (
+            <ul className={`list-disc pl-5 leading-relaxed text-2xl text-justify ${textColor} whitespace-normal`}>
+              {description.map((point, index) => (
+                <li key={index}>{point}</li>
+          ))}
+            </ul>
+) : (
+  <p className={`leading-relaxed text-justify ${textColor} whitespace-normal`}>
+    {description}
+  </p>
+)}
         </motion.div>
       </div>
     </motion.section>
@@ -237,15 +259,121 @@ export const PlacesCards = ({ title, places }) => {
     </div>
   );
 };
-//Json Cards 
 
+//expcardabt
+export const CardE = ({ title, places = [] }) => {
+  const [expandedIndex, setExpandedIndex] = useState(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const root = document.documentElement;
+      if (window.innerWidth < 640) root.style.setProperty("--grid-cols", "1");
+      else if (window.innerWidth < 1024) root.style.setProperty("--grid-cols", "2");
+      else root.style.setProperty("--grid-cols", "3");
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const expandedPlace = expandedIndex !== null ? places[expandedIndex] : null;
+
+  return (
+    <section className="w-full">
+      <h2 className="text-3xl font-bold text-center mb-10">{title}</h2>
+
+      <div
+        className="grid gap-8 justify-items-center mx-auto"
+        style={{
+          gridTemplateColumns: `repeat(var(--grid-cols, 1), minmax(0, 1fr))`,
+          maxWidth: "100%",
+        }}
+      >
+        {places.map((place, index) => (
+          <div
+            key={place.id || index}
+            className="bg-white shadow-md rounded-xl overflow-hidden cursor-pointer transition-transform hover:scale-105 duration-300 w-full max-w-sm"
+            onClick={() => setExpandedIndex(index)}
+          >
+            <div className="p-4">
+              <h3 className="text-xl font-semibold mb-2">
+                {place.tier} – {place.name}
+              </h3>
+              <p className="text-gray-600 text-sm">{place.description}</p>
+              <p className="text-sm mt-2 font-semibold text-green-600">
+                {place.startingPrice}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {expandedPlace && (
+  <div
+    className="fixed inset-0 bg-black bg-opacity-60 z-50 flex justify-center items-center"
+    onClick={() => setExpandedIndex(null)}
+  >
+    <div
+      className="relative bg-white w-[90%] md:w-[80%] max-h-[90vh] overflow-y-auto rounded-xl shadow-lg p-6"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Heading Centered */}
+      <h2 className="text-3xl font-bold text-center mb-6">
+        {expandedPlace.tier} – {expandedPlace.name}
+      </h2>
+
+      {/* Content & Form Container */}
+      <div className="flex flex-col md:flex-row gap-6">
+        {/* Left Column: Package Details */}
+        <div className="md:w-2/3 text-left">
+          <p className="mb-4 text-gray-700 italic">{expandedPlace.description}</p>
+          <ul className="list-disc list-inside space-y-2 text-gray-800">
+            <li><strong>Duration:</strong> {expandedPlace.duration}</li>
+            <li><strong>Makkah Hotel:</strong> {expandedPlace.makkahHotel}</li>
+            <li><strong>Madinah Hotel:</strong> {expandedPlace.madinahHotel}</li>
+            <li><strong>Transport:</strong> {expandedPlace.transport}</li>
+            <li><strong>Meals:</strong> {expandedPlace.meals}</li>
+            <li><strong>Ziyarat Tour:</strong> {expandedPlace.ziyarat}</li>
+            {expandedPlace.visaAndInsurance && (
+              <li><strong>Visa & Insurance:</strong> {expandedPlace.visaAndInsurance}</li>
+            )}
+            {expandedPlace.visaInsuranceSim && (
+              <li><strong>Visa, Insurance & SIM:</strong> {expandedPlace.visaInsuranceSim}</li>
+            )}
+            {expandedPlace.visaInsuranceVIP && (
+              <li><strong>Visa, Insurance, VIP Lounge:</strong> {expandedPlace.visaInsuranceVIP}</li>
+            )}
+            <li><strong>Group Size:</strong> {expandedPlace.groupSize}</li>
+            <li><strong>Extras:</strong> {expandedPlace.extras.join(", ")}</li>
+            <li><strong>Starting From:</strong> {expandedPlace.startingPrice}</li>
+          </ul>
+        </div>
+
+        {/* Right Column: Enquiry Form */}
+        <div className="md:w-1/3 w-full bg-gray-50 p-4 rounded-lg shadow-inner">
+          
+          <EnquiryForm packageId={expandedPlace.id || expandedPlace.packageId || `umrah-${expandedIndex}`} />
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+    </section>
+  );
+};
+
+
+
+//Json Cards 
 export const ExpandableCard = ({ title, file }) => {
   const [places, setPlaces] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedIndex, setExpandedIndex] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_URL}/data/${file}`) // Corrected fetch path
+    fetch(`${API_URL}/data/${file}`)
       .then((res) => res.json())
       .then((data) => {
         setPlaces(data);
@@ -301,73 +429,95 @@ export const ExpandableCard = ({ title, file }) => {
       </div>
 
       {expandedPlace && (
-        <div
+        <motion.div
           className="fixed inset-0 bg-black bg-opacity-60 z-50 flex justify-center items-center"
           onClick={() => setExpandedIndex(null)}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
         >
-          <div
+          <motion.div
             className="relative bg-white w-[90%] md:w-[70%] max-h-[90vh] overflow-y-auto rounded-xl shadow-lg p-6"
             onClick={(e) => e.stopPropagation()}
+            initial={{ scale: 0.9 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.3 }}
           >
             {/* Back Button */}
-            <button
-              className="absolute top-4 left-4 bg-gray-200 text-gray-800 px-3 py-1 rounded"
+            <Button
+              variant="contained"
+              color="secondary"
               onClick={() => setExpandedIndex(null)}
+              sx={{
+                position: "absolute",
+                top: 16,
+                left: 16,
+                textTransform: "none",
+              }}
+              startIcon={<FaArrowLeft />}
             >
-              ← Back
-            </button>
+              Back
+            </Button>
 
-            {/* Next/Previous Buttons */}
-            <div className="absolute top-4 right-4 flex gap-2">
-              <button
-                disabled={expandedIndex <= 0}
+            {/* Navigation Buttons */}
+            <div className="flex justify-end gap-4 mb-4 mt-2">
+              <Button
                 onClick={() => setExpandedIndex((prev) => prev - 1)}
-                className={`px-3 py-1 rounded ${expandedIndex <= 0 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-gray-200 text-gray-800'}`}
+                disabled={expandedIndex <= 0}
+                startIcon={<FaArrowLeft />}
+                variant="outlined"
               >
-                ← Prev
-              </button>
-              <button
-                disabled={expandedIndex >= places.length - 1}
+                Prev
+              </Button>
+              <Button
                 onClick={() => setExpandedIndex((prev) => prev + 1)}
-                className={`px-3 py-1 rounded ${expandedIndex >= places.length - 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-gray-200 text-gray-800'}`}
+                disabled={expandedIndex >= places.length - 1}
+                endIcon={<FaArrowRight />}
+                variant="outlined"
               >
-                Next →
-              </button>
+                Next
+              </Button>
             </div>
 
             {/* Modal Content */}
-            <img
+            <motion.img
               src={expandedPlace?.heroImage}
               alt={expandedPlace.title}
               className="rounded-lg mb-6 w-full object-cover max-h-80"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
             />
             <h2 className="text-3xl font-bold mb-4">{expandedPlace.title}</h2>
-            <p className="text-gray-700 leading-relaxed mb-6">{expandedPlace.fullDescription}</p>
-            <p className="text-gray-700 leading-relaxed mb-6">{expandedPlace.fullDescription2}</p>
-            <p className="text-gray-700 leading-relaxed mb-6">{expandedPlace.fullDescription3}</p>
-            <p className="text-gray-700 leading-relaxed mb-6">{expandedPlace.fullDescription4}</p>
-            <p className="text-gray-700 leading-relaxed mb-6">{expandedPlace.fullDescription5}</p>
+            {[...Array(5).keys()].map((i) => (
+              <p key={i} className="text-gray-700 leading-relaxed mb-6">
+                {expandedPlace[`fullDescription${i === 0 ? "" : i + 1}`]}
+              </p>
+            ))}
+
+            {/* Gallery */}
             {expandedPlace.gallery?.length > 0 && (
               <div className="mt-8">
                 <h3 className="text-xl font-semibold mb-4">Gallery</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {expandedPlace.gallery.map((img, idx) => (
-                    <img
+                    <motion.img
                       key={idx}
                       src={img}
                       alt={`${expandedPlace.title} ${idx + 1}`}
-                      className="rounded-lg object-cover w-full h-40 hover:scale-105 transition-transform"
+                      className="rounded-lg object-cover w-full h-40"
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.3 }}
                     />
                   ))}
                 </div>
               </div>
             )}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
     </section>
   );
 };
+
 
 
 // Contact Us Form
@@ -535,6 +685,7 @@ export const EnquiryForm = ({ packageId }) => {
     initialValues: {
       name: '',
       phone: '',
+      email: '',
       packageId: packageId || '',
     },
     validationSchema: Yup.object({
@@ -542,6 +693,9 @@ export const EnquiryForm = ({ packageId }) => {
       phone: Yup.string()
         .matches(/^[0-9]{10}$/, 'Phone must be 10 digits')
         .required('Phone is required'),
+      email: Yup.string()
+        .email('Invalid email address')
+        .required('Email is required'),
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
@@ -596,6 +750,18 @@ export const EnquiryForm = ({ packageId }) => {
             onChange={formik.handleChange}
             error={formik.touched.phone && Boolean(formik.errors.phone)}
             helperText={formik.touched.phone && formik.errors.phone}
+          />
+
+          <TextField
+            fullWidth
+            id="email"
+            name="email"
+            label="Email Address"
+            margin="normal"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
           />
 
           <TextField
@@ -665,3 +831,21 @@ export function PopupAd() {
     </div>
   );
 }
+
+export const ScrollToHashElement = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        // slight timeout ensures the element is mounted
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 100); 
+      }
+    }
+  }, [location]);
+
+  return null;
+};
