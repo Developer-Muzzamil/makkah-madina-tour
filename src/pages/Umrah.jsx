@@ -127,6 +127,7 @@ function TimelineSection1() {
 
 const UmrahStepSlider = ({ umrahSteps, autoPlayInterval = 5000 }) => {
   const [currentStep, setCurrentStep] = useState(0);
+  const sliderRef = useRef(null);
 
   const nextStep = () => {
     setCurrentStep((prev) => (prev + 1) % umrahSteps.length);
@@ -149,50 +150,55 @@ const UmrahStepSlider = ({ umrahSteps, autoPlayInterval = 5000 }) => {
         Steps to Perform Umrah
       </h1>
 
-      {/* Relative wrapper with height and overflow */}
-      <div className="relative w-full max-w-4xl h-[520px] overflow-hidden rounded-2xl shadow-xl bg-white">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentStep}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.7, ease: 'easeInOut' }}
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.8}
-            onDragEnd={(e, info) => {
-              if (info.offset.x < -100) nextStep();
-              else if (info.offset.x > 100) prevStep();
-            }}
-            className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-start px-6 pt-6 pb-4 cursor-grab"
-          >
-            {/* Step indicator */}
-            <div className="w-full flex justify-start mb-2">
-              <div className="bg-amber-200 text-amber-900 text-sm font-semibold px-3 py-1 rounded-full shadow">
-                Step {currentStep + 1}
+      <div className="relative w-full max-w-4xl">
+        {/* Slider container */}
+        <div
+          ref={sliderRef}
+          className="h-[520px] overflow-hidden rounded-2xl shadow-xl bg-white"
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentStep}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.7, ease: 'easeInOut' }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.8}
+              onDragEnd={(e, info) => {
+                if (info.offset.x < -100) nextStep();
+                else if (info.offset.x > 100) prevStep();
+              }}
+              className="w-full h-full flex flex-col items-center justify-start px-6 pt-6 pb-4 cursor-grab"
+            >
+              {/* Step indicator */}
+              <div className="w-full flex justify-start mb-2">
+                <div className="bg-amber-200 text-amber-900 text-sm font-semibold px-3 py-1 rounded-full shadow">
+                  Step {currentStep + 1}
+                </div>
               </div>
-            </div>
 
-            <img
-              src={umrahSteps[currentStep].image}
-              alt={umrahSteps[currentStep].title}
-              className="w-full max-h-56 object-cover rounded-lg mb-5 bg-white shadow-md"
-            />
+              <img
+                src={umrahSteps[currentStep].image}
+                alt={umrahSteps[currentStep].title}
+                className="w-full max-h-56 object-cover rounded-lg mb-5 bg-white shadow-md"
+              />
 
-            <h2 className="text-2xl font-bold mb-2 text-center text-gray-800">
-              {umrahSteps[currentStep].title}
-            </h2>
+              <h2 className="text-2xl font-bold mb-2 text-center text-gray-800">
+                {umrahSteps[currentStep].title}
+              </h2>
 
-            <ul className="text-gray-700 text-lg list-disc list-inside space-y-1 text-left max-w-xl">
-              {umrahSteps[currentStep].content.map((point, idx) => (
-                <li key={idx}>{point}</li>
-              ))}
-            </ul>
-          </motion.div>
-        </AnimatePresence>
+              <ul className="text-gray-700 text-lg list-disc list-inside space-y-1 text-left max-w-xl">
+                {umrahSteps[currentStep].content.map((point, idx) => (
+                  <li key={idx}>{point}</li>
+                ))}
+              </ul>
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
-        {/* External arrows positioned outside container with offset */}
+        {/* External arrows positioned outside container with increased offset */}
         <div
           onClick={prevStep}
           className={`absolute left-[-48px] top-1/2 transform -translate-y-1/2 bg-amber-100 p-2 rounded-full shadow cursor-pointer transition-opacity
@@ -234,7 +240,6 @@ const UmrahStepSlider = ({ umrahSteps, autoPlayInterval = 5000 }) => {
     </div>
   );
 };
-
 
 
 

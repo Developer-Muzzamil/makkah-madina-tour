@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef  } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { HeroSection } from '../components/PageComponent';
@@ -90,97 +90,111 @@ const hajjSteps = [
 
 const HajjStepSlider = ({ hajjSteps, autoPlayInterval = 5000 }) => {
   const [currentStep, setCurrentStep] = useState(0);
-  const length = hajjSteps.length;
+  const sliderRef = useRef(null);
 
-  const nextStep = () => length > 0 && setCurrentStep(prev => (prev + 1) % length);
-  const prevStep = () => length > 0 && setCurrentStep(prev => (prev - 1 + length) % length);
+  const nextStep = () => {
+    setCurrentStep((prev) => (prev + 1) % hajjSteps.length);
+  };
+
+  const prevStep = () => {
+    setCurrentStep((prev) => (prev - 1 + hajjSteps.length) % hajjSteps.length);
+  };
 
   useEffect(() => {
-    if (length <= 1) return;
     const interval = setInterval(nextStep, autoPlayInterval);
     return () => clearInterval(interval);
-  }, [length, autoPlayInterval]);
-
-  if (length === 0) {
-    return <p className="text-center text-gray-500">No steps available.</p>;
-  }
+  }, [hajjSteps.length, autoPlayInterval]);
 
   return (
-    <div className="flex flex-col items-center justify-center p-6 w-full bg-white">
-      <h1 className="text-3xl font-extrabold text-gray-800 mb-6">Steps to Perform Hajj</h1>
-      <div className="relative w-full max-w-3xl h-[480px] overflow-hidden rounded-2xl shadow-2xl bg-white">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentStep}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.7, ease: 'easeInOut' }}
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.8}
-            onDragEnd={(e, info) => {
-              if (info.offset.x < -100) nextStep();
-              else if (info.offset.x > 100) prevStep();
-            }}
-            className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-start p-6 cursor-grab"
-          >
-            <div className="w-full flex justify-start mb-2">
-              <div className="bg-amber-200 text-amber-900 text-sm font-semibold px-3 py-1 rounded-full shadow">
-                Step {currentStep + 1}
-              </div>
-            </div>
-            <img
-              src={hajjSteps[currentStep].image}
-              alt={hajjSteps[currentStep].title}
-              className="w-full h-52 object-cover rounded-lg mb-4 bg-white shadow-md"
-            />
-            <h2 className="text-2xl font-bold mb-2 text-center text-gray-800">
-              {hajjSteps[currentStep].title}
-            </h2>
-            <ul className="text-gray-700 text-lg list-disc list-inside space-y-1 text-left">
-              {hajjSteps[currentStep].content.map((point, idx) => (
-                <li key={idx}>{point}</li>
-              ))}
-            </ul>
-          </motion.div>
-        </AnimatePresence>
+    <div className="flex flex-col items-center justify-center px-4 sm:px-6 md:px-10 py-8 w-full bg-white">
+      <h1 className="text-3xl font-extrabold text-gray-800 mb-6">
+        Steps to Perform Hajj
+      </h1>
 
-        {/* Navigation Buttons */}
+      <div className="relative w-full max-w-4xl">
+        <div
+          ref={sliderRef}
+          className="h-[520px] overflow-hidden rounded-2xl shadow-xl bg-white"
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentStep}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.7, ease: 'easeInOut' }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.8}
+              onDragEnd={(e, info) => {
+                if (info.offset.x < -100) nextStep();
+                else if (info.offset.x > 100) prevStep();
+              }}
+              className="w-full h-full flex flex-col items-center justify-start px-6 pt-6 pb-4 cursor-grab"
+            >
+              <div className="w-full flex justify-start mb-2">
+                <div className="bg-amber-200 text-amber-900 text-sm font-semibold px-3 py-1 rounded-full shadow">
+                  Step {currentStep + 1}
+                </div>
+              </div>
+
+              <img
+                src={hajjSteps[currentStep].image}
+                alt={hajjSteps[currentStep].title}
+                className="w-full max-h-56 object-cover rounded-lg mb-5 bg-white shadow-md"
+              />
+
+              <h2 className="text-2xl font-bold mb-2 text-center text-gray-800">
+                {hajjSteps[currentStep].title}
+              </h2>
+
+              <ul className="text-gray-700 text-lg list-disc list-inside space-y-1 text-left max-w-xl">
+                {hajjSteps[currentStep].content.map((point, idx) => (
+                  <li key={idx}>{point}</li>
+                ))}
+              </ul>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
         <div
           onClick={prevStep}
           className={`absolute left-[-48px] top-1/2 transform -translate-y-1/2 bg-amber-100 p-2 rounded-full shadow cursor-pointer transition-opacity
-            ${length <= 1 ? 'opacity-50 pointer-events-none' : 'hover:bg-amber-200'}`}
+            ${hajjSteps.length <= 1 ? 'opacity-50 pointer-events-none' : 'hover:bg-amber-200'}`}
         >
           <ChevronLeft className="w-6 h-6 text-amber-900" />
         </div>
         <div
           onClick={nextStep}
           className={`absolute right-[-48px] top-1/2 transform -translate-y-1/2 bg-amber-100 p-2 rounded-full shadow cursor-pointer transition-opacity
-            ${length <= 1 ? 'opacity-50 pointer-events-none' : 'hover:bg-amber-200'}`}
+            ${hajjSteps.length <= 1 ? 'opacity-50 pointer-events-none' : 'hover:bg-amber-200'}`}
         >
           <ChevronRight className="w-6 h-6 text-amber-900" />
         </div>
       </div>
 
-      {/* Thumbnail Carousel */}
-      <div className="flex overflow-x-auto w-full max-w-4xl mt-6 space-x-3 px-4 pb-2">
+      <div className="flex overflow-x-auto w-full max-w-5xl mt-6 space-x-4 px-4 pb-2">
         {hajjSteps.map((step, index) => (
           <motion.div
             key={index}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setCurrentStep(index)}
-            className={`cursor-pointer flex-shrink-0 w-24 h-24 rounded-xl overflow-hidden border-2 transition-all duration-300
-              ${currentStep === index ? 'border-blue-500 shadow-lg' : 'border-transparent hover:border-blue-300'}`}
+            className={`cursor-pointer flex-shrink-0 w-24 h-24 rounded-xl overflow-hidden border-4 transition-all duration-300
+              ${currentStep === index ? 'border-amber-300 shadow-lg' : 'border-transparent hover:border-amber-100'}`}
           >
-            <img src={step.image} alt={step.title} className="w-full h-full object-cover" />
+            <img
+              src={step.image}
+              alt={step.title}
+              className="w-full h-full object-cover"
+            />
           </motion.div>
         ))}
       </div>
     </div>
   );
 };
+
 
 const TimelineSection1 = () => {
   const steps = [
