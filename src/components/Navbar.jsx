@@ -1,88 +1,103 @@
 import React, { useEffect, useState } from "react";
-import { NavLink , useLocation} from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinkClass = ({ isActive }) =>
-    isActive ? "text-yellow-500 underline" : "hover:text-yellow-400";
+    isActive
+      ? "relative text-yellow-500 font-semibold after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:bg-yellow-500"
+      : "relative text-white hover:text-yellow-400 transition-all after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 hover:after:w-full after:bg-yellow-400 after:transition-all after:duration-300";
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-const location = useLocation();
-useEffect(() => {
-  window.scrollTo(0, 0); // Scroll to top on route change
-}, [location.pathname]);
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setIsOpen(false);
+  }, [location.pathname]);
 
   return (
-    <nav className="bg-black bg-opacity-80 shadow-md sticky top-0 z-50 py-2">
-      <div className="w-full px-6 py-4 flex justify-between items-center">
-        {/* Logo on the left */}
-        <img src="images/ico/DarkLogocUT.PNG" alt="Logo" className="h-10 w-auto" />
+    <nav className="bg-black bg-opacity-60 backdrop-blur-lg shadow-md sticky top-0 z-50">
+      <div className="w-full flex items-center justify-between px-4 md:px-6 py-5 relative">
+        {/* Left: Logo */}
+        <div className="flex-none">
+          <img
+            src="images/ico/DarkLogocUT.PNG"
+            alt="Logo"
+            className="h-12 w-auto"
+          />
+        </div>
 
-        {/* Desktop Links in center */}
-        <ul className="hidden md:flex gap-6 text-white font-medium mx-auto">
+        {/* Center: Nav Links (absolute center) */}
+        <div className="absolute left-1/2 transform -translate-x-1/2 hidden md:flex gap-10 text-white font-medium">
           {["Home", "Makkah", "Madina", "Hajj", "Umrah", "About"].map((link) => (
-            <motion.li
+            <NavLink
               key={link}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
+              to={`/${link.toLowerCase()}`}
+              className={navLinkClass}
             >
-              <NavLink to={`/${link.toLowerCase()}`} className={navLinkClass}>
-                {link}
-              </NavLink>
-            </motion.li>
+              {link}
+            </NavLink>
           ))}
-        </ul>
+        </div>
 
-        {/* Contact Us button on the right */}
-                  <NavLink
+        {/* Right: Contact Us / Menu */}
+        <div className="flex-none">
+          {/* Desktop: Contact Us */}
+          <NavLink
             to="/about#contact-form"
-            className="text-white hover:scale-110 transition-transform"
+            className="hidden md:block text-white hover:text-yellow-400 transition-colors"
           >
             Contact Us
           </NavLink>
 
-
-        {/* Mobile Hamburger Icon */}
-        <div className="md:hidden text-white">
-          <button onClick={toggleMenu}>
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
+          {/* Mobile: Hamburger */}
+          <div className="md:hidden text-white">
+            <button onClick={toggleMenu}>
+              {isOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      <motion.div
-        className="md:hidden px-6 pb-4"
-        initial={{ x: "-100%" }}
-        animate={{ x: isOpen ? 0 : "-100%" }}
-        transition={{ type: "spring", stiffness: 200 }}
-      >
+      <AnimatePresence>
         {isOpen && (
-          <ul className="flex flex-col gap-4 text-white font-medium">
-            {["Home", "Makkah", "Madina", "Hajj", "Umrah", "About"].map((link) => (
-              <motion.li
-                key={link}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.1 }}
-              >
+          <motion.div
+            className="md:hidden bg-black bg-opacity-90 px-6 pt-4 pb-6"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ type: "spring", damping: 20, stiffness: 200 }}
+          >
+            <ul className="flex flex-col gap-4 text-white font-medium">
+              {["Home", "Makkah", "Madina", "Hajj", "Umrah", "About"].map((link) => (
+                <li key={link}>
+                  <NavLink
+                    to={`/${link.toLowerCase()}`}
+                    className={navLinkClass}
+                    onClick={toggleMenu}
+                  >
+                    {link}
+                  </NavLink>
+                </li>
+              ))}
+              <li>
                 <NavLink
-                  to={`/${link.toLowerCase()}`}
-                  className={navLinkClass}
+                  to="/about#contact-form"
+                  className="text-white hover:text-yellow-400"
                   onClick={toggleMenu}
                 >
-                  {link}
+                  Contact Us
                 </NavLink>
-              </motion.li>
-            ))}
-          </ul>
+              </li>
+            </ul>
+          </motion.div>
         )}
-      </motion.div>
+      </AnimatePresence>
     </nav>
   );
 };
