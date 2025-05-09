@@ -83,12 +83,15 @@ const umrahSteps = [
 
 function TimelineSection1() {
   const steps = [
-    "Enter Ihram & Travel to Mina",
-    "Stand at Arafat",
-    "Night in Muzdalifah",
-    "Stoning & Sacrifice",
-    "Tawaf & Sa’i",
-    "Final Days in Mina",
+    "Ihram & Niyyah",
+    "Masjid al-Haram",
+    "Tawaf around the Kaaba",
+    "Pray at Maqam Ibrahim",
+    "Sa’i between Safa and Marwah",
+    "Hair Cutting (Tahalul)",
+    "Dua at the Kaaba",
+    "Drinking Zamzam Water",
+    "Visit to Madina (Optional)",
   ];
 
   return (
@@ -124,6 +127,43 @@ function TimelineSection1() {
     </div>
   );
 }
+
+
+
+// Main Component
+  // return (
+  //   <div className="relative w-full overflow-x-auto py-16">
+  //     <h2 className="text-3xl font-bold mb-12 text-center">Umrah Timeline</h2>
+  //     <div className="relative flex w-max mx-auto items-center justify-between px-8">
+  //       <div className="absolute left-0 right-0 top-1/2 h-1 bg-amber-900 z-0" />
+
+  //       {steps.map((step, index) => (
+  //         <div key={index} className="relative z-10 flex flex-col items-center w-40 mx-4">
+  //           {index % 2 === 0 ? (
+  //             <>
+  //               <div className="mb-2 text-center">
+  //                 <div className="font-semibold text-purple-800">Step {index + 1}</div>
+  //                 <div className="text-xs text-amber-700 mt-1">{step}</div>
+  //               </div>
+  //               <div className="w-0.5 h-6 bg-gray-400 mb-2"></div>
+  //               <div className="w-16 h-6 bg-amber-400 rounded-md"></div>
+  //             </>
+  //           ) : (
+  //             <>
+  //               <div className="w-16 h-6 bg-amber-400 rounded-md"></div>
+  //               <div className="w-0.5 h-6 bg-gray-400 mt-2"></div>
+  //               <div className="mt-2 text-center">
+  //                 <div className="font-semibold text-purple-800">Step {index + 1}</div>
+  //                 <div className="text-xs text-amber-700 mt-1">{step}</div>
+  //               </div>
+  //             </>
+  //           )}
+  //         </div>
+  //       ))}
+  //     </div>
+  //   </div>
+  // );
+
 
 const UmrahStepSlider = ({ umrahSteps, autoPlayInterval = 5000 }) => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -182,7 +222,7 @@ const UmrahStepSlider = ({ umrahSteps, autoPlayInterval = 5000 }) => {
               <img
                 src={umrahSteps[currentStep].image}
                 alt={umrahSteps[currentStep].title}
-                className="w-full max-h-56 object-cover rounded-lg mb-5 bg-white shadow-md"
+                className="w-full h-100 object-cover rounded-lg mb-5 bg-white shadow-md"
               />
 
               <h2 className="text-2xl font-bold mb-2 text-center text-gray-800">

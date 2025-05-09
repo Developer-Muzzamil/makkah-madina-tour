@@ -141,7 +141,7 @@ const HajjStepSlider = ({ hajjSteps, autoPlayInterval = 5000 }) => {
               <img
                 src={hajjSteps[currentStep].image}
                 alt={hajjSteps[currentStep].title}
-                className="w-full max-h-56 object-cover rounded-lg mb-5 bg-white shadow-md"
+                className="w-full h-100 object-cover rounded-lg mb-5 bg-white shadow-md"
               />
 
               <h2 className="text-2xl font-bold mb-2 text-center text-gray-800">
@@ -198,6 +198,15 @@ const HajjStepSlider = ({ hajjSteps, autoPlayInterval = 5000 }) => {
 
 const TimelineSection1 = () => {
   const steps = [
+    "Ihram & Niyyah (Intention)",
+    "Tawaf al-Qudum (Arrival Tawaf)",
+    "8th Dhul Hijjah – Day of Tarwiyah (Mina)",
+    "9th Dhul Hijjah – Day of Arafah",
+    "9th Dhul Hijjah (Evening ) – Muzdalifah",
+    "10th Dhul Hijjah – Eid al-Adha: Jamarat, Sacrifice, Haircut",
+    "Tawaf al-Ifadah (Main Tawaf)",
+    "11th & 12th Dhul Hijjah – Days of Tashreeq (Mina)",
+    "Farewell Tawaf (Tawaf al-Wida)",
     "Enter Ihram & Travel to Mina",
     "Stand at Arafat",
     "Night in Muzdalifah",
@@ -217,7 +226,7 @@ const TimelineSection1 = () => {
               <>
                 <div className="mb-2 text-center">
                   <div className="font-semibold text-purple-800">Step {index + 1}</div>
-                  <div className="text-xs text-amber-700 mt-1">{step}</div>
+                  <div className="text-xs text-amber-700 mt-1 pb-10">{step}</div>
                 </div>
                 <div className="w-0.5 h-6 bg-gray-400 mb-2"></div>
                 <div className="w-16 h-6 bg-amber-400 rounded-md"></div>
@@ -227,7 +236,7 @@ const TimelineSection1 = () => {
                 <div className="w-16 h-6 bg-amber-400 rounded-md"></div>
                 <div className="w-0.5 h-6 bg-gray-400 mt-2"></div>
                 <div className="mt-2 text-center">
-                  <div className="font-semibold text-purple-800">Step {index + 1}</div>
+                  <div className="font-semibold text-purple-800 pt-10">Step {index + 1}</div>
                   <div className="text-xs text-amber-700 mt-1">{step}</div>
                 </div>
               </>

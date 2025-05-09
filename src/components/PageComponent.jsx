@@ -2,18 +2,13 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Button, FormLabel, TextField, TextareaAutosize, Box, Typography, Paper } from "@mui/material";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { IoMdClose } from "react-icons/io";
-// import { HiOutlineMail } from "react-icons/hi"; // Icon for email
+import { FaTimesCircle } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
 const API_URL = import.meta.env.VITE_API_URL;
 import { Formik, Form, Field, ErrorMessage,useFormik} from "formik";
 import * as Yup from "yup";
-// import TextareaAutosize from "react-textarea-autosize";
-// import { Button } from "@/components/ui/button";
-// import { FormLabel } from "@/components/ui/label";
-// import { TextField } from "@/components/ui/textfield";
+
 
 //herosection
 export const HeroSection = ({
@@ -75,10 +70,10 @@ export const HeroSection = ({
         {/* Dynamic Hadith Section */}
         {hadithText && (
           <div className="mt-8 mx-auto w-[90%] md:w-[62%] bg-white/30 backdrop-blur-sm rounded-xl p-4 md:p-6 shadow-lg">
-            <p className="text-sm md:text-base italic text-white leading-relaxed">
+            <p className="text-xl md:text italic text-white leading-relaxed">
               “{hadithText}”
               {hadithSource && (
-                <span className="text-sm block mt-2 text-gray-200">– {hadithSource}</span>
+                <span className="text-2xl block mt-2 text-gray-200">– {hadithSource}</span>
               )}
             </p>
           </div>
@@ -260,7 +255,17 @@ export const PlacesCards = ({ title, places }) => {
   );
 };
 
-//expcardabt
+
+
+const listItemVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: (i) => ({
+    opacity: 1,
+    x: 0,
+    transition: { delay: i * 0.1 },
+  }),
+};
+
 export const CardE = ({ title, places = [] }) => {
   const [expandedIndex, setExpandedIndex] = useState(null);
 
@@ -280,89 +285,126 @@ export const CardE = ({ title, places = [] }) => {
   const expandedPlace = expandedIndex !== null ? places[expandedIndex] : null;
 
   return (
-    <section className="w-full">
-      <h2 className="text-3xl font-bold text-center mb-10">{title}</h2>
+    <section className="w-full font-[Inter] bg-green-100 py-10 px-4">
+      <motion.h2
+        className="text-4xl font-extrabold text-center text-indigo-800 mb-10"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        {title}
+      </motion.h2>
 
       <div
         className="grid gap-8 justify-items-center mx-auto"
         style={{
           gridTemplateColumns: `repeat(var(--grid-cols, 1), minmax(0, 1fr))`,
-          maxWidth: "100%",
         }}
       >
         {places.map((place, index) => (
-          <div
+          <motion.div
             key={place.id || index}
-            className="bg-white shadow-md rounded-xl overflow-hidden cursor-pointer transition-transform hover:scale-105 duration-300 w-full max-w-sm"
+            className="bg-gradient-to-br from-white via-slate-100 to-gray-50 shadow-xl rounded-2xl overflow-hidden cursor-pointer transform w-full max-w-sm border border-gray-200"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 300 }}
             onClick={() => setExpandedIndex(index)}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
           >
-            <div className="p-4">
-              <h3 className="text-xl font-semibold mb-2">
+            <img
+              src={place.image}
+              alt={place.name}
+              className="w-full h-44 object-cover"
+            />
+            <div className="p-5">
+              <h3 className="text-2xl font-semibold text-gray-900 mb-1">
                 {place.tier} – {place.name}
               </h3>
               <p className="text-gray-600 text-sm">{place.description}</p>
-              <p className="text-sm mt-2 font-semibold text-green-600">
+              <p className="text-md mt-3 font-semibold text-green-700">
                 {place.startingPrice}
               </p>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
 
-      {expandedPlace && (
-  <div
-    className="fixed inset-0 bg-black bg-opacity-60 z-50 flex justify-center items-center"
-    onClick={() => setExpandedIndex(null)}
-  >
-    <div
-      className="relative bg-white w-[90%] md:w-[80%] max-h-[90vh] overflow-y-auto rounded-xl shadow-lg p-6"
-      onClick={(e) => e.stopPropagation()}
-    >
-      {/* Heading Centered */}
-      <h2 className="text-3xl font-bold text-center mb-6">
-        {expandedPlace.tier} – {expandedPlace.name}
-      </h2>
+      <AnimatePresence>
+        {expandedPlace && (
+          <motion.div
+            className="fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setExpandedIndex(null)}
+          >
+            <motion.div
+              className="relative bg-gradient-to-br from-white via-slate-50 to-gray-100 rounded-2xl shadow-2xl w-[90%] md:w-[80%] max-h-[90vh] overflow-y-auto p-6"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h2 className="text-3xl font-bold text-center text-indigo-900 mb-6">
+                {expandedPlace.tier} – {expandedPlace.name}
+              </h2>
 
-      {/* Content & Form Container */}
-      <div className="flex flex-col md:flex-row gap-6">
-        {/* Left Column: Package Details */}
-        <div className="md:w-2/3 text-left">
-          <p className="mb-4 text-gray-700 italic">{expandedPlace.description}</p>
-          <ul className="list-disc list-inside space-y-2 text-gray-800">
-            <li><strong>Duration:</strong> {expandedPlace.duration}</li>
-            <li><strong>Makkah Hotel:</strong> {expandedPlace.makkahHotel}</li>
-            <li><strong>Madinah Hotel:</strong> {expandedPlace.madinahHotel}</li>
-            <li><strong>Transport:</strong> {expandedPlace.transport}</li>
-            <li><strong>Meals:</strong> {expandedPlace.meals}</li>
-            <li><strong>Ziyarat Tour:</strong> {expandedPlace.ziyarat}</li>
-            {expandedPlace.visaAndInsurance && (
-              <li><strong>Visa & Insurance:</strong> {expandedPlace.visaAndInsurance}</li>
-            )}
-            {expandedPlace.visaInsuranceSim && (
-              <li><strong>Visa, Insurance & SIM:</strong> {expandedPlace.visaInsuranceSim}</li>
-            )}
-            {expandedPlace.visaInsuranceVIP && (
-              <li><strong>Visa, Insurance, VIP Lounge:</strong> {expandedPlace.visaInsuranceVIP}</li>
-            )}
-            <li><strong>Group Size:</strong> {expandedPlace.groupSize}</li>
-            <li><strong>Extras:</strong> {expandedPlace.extras.join(", ")}</li>
-            <li><strong>Starting From:</strong> {expandedPlace.startingPrice}</li>
-          </ul>
-        </div>
+              <div className="flex flex-col md:flex-row gap-6">
+                {/* Left: Package Details */}
+                <div className="md:w-2/3 text-gray-800 space-y-3 text-[15px]">
+                  <p className="italic text-gray-600">{expandedPlace.description}</p>
+                  <ul className="list-disc list-inside text-left space-y-2">
+                    {[
+                      ["Duration", expandedPlace.duration],
+                      ["Makkah Hotel", expandedPlace.makkahHotel],
+                      ["Madinah Hotel", expandedPlace.madinahHotel],
+                      ["Transport", expandedPlace.transport],
+                      ["Meals", expandedPlace.meals],
+                      ["Ziyarat Tour", expandedPlace.ziyarat],
+                      expandedPlace.visaAndInsurance && ["Visa & Insurance", expandedPlace.visaAndInsurance],
+                      expandedPlace.visaInsuranceSim && ["Visa, Insurance & SIM", expandedPlace.visaInsuranceSim],
+                      expandedPlace.visaInsuranceVIP && ["Visa, Insurance, VIP Lounge", expandedPlace.visaInsuranceVIP],
+                      ["Group Size", expandedPlace.groupSize],
+                      ["Extras", expandedPlace.extras.join(", ")],
+                      ["Starting From", expandedPlace.startingPrice],
+                    ]
+                      .filter(Boolean)
+                      .map(([label, value], i) => (
+                        <motion.li
+                          key={label}
+                          custom={i}
+                          initial="hidden"
+                          animate="visible"
+                          variants={listItemVariants}
+                          className="text-gray-800"
+                        >
+                          <strong>{label}:</strong> {value}
+                        </motion.li>
+                      ))}
+                  </ul>
+                </div>
 
-        {/* Right Column: Enquiry Form */}
-        <div className="md:w-1/3 w-full bg-gray-50 p-4 rounded-lg shadow-inner">
-          
-          <EnquiryForm packageId={expandedPlace.id || expandedPlace.packageId || `umrah-${expandedIndex}`} />
-        </div>
-      </div>
-    </div>
-  </div>
-)}
-
+                {/* Right: Form */}
+                <div className="md:w-1/3 bg-white p-6 rounded-xl shadow-inner border border-slate-200">
+                  <h3 className="text-xl font-semibold text-center mb-4">Enquire Now</h3>
+                  <EnquiryForm
+                    packageId={
+                      expandedPlace.id ||
+                      expandedPlace.packageId ||
+                      `umrah-${expandedIndex}`
+                    }
+                  />
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
+
 
 
 
@@ -380,7 +422,7 @@ export const ExpandableCard = ({ title, file }) => {
         setLoading(false);
       })
       .catch((err) => {
-        console.error(`Failed to fetch from API:`, err);
+        console.error("Failed to fetch from API:", err);
         setLoading(false);
       });
   }, [file]);
@@ -478,15 +520,20 @@ export const ExpandableCard = ({ title, file }) => {
               </Button>
             </div>
 
-            {/* Modal Content */}
-            <motion.img
-              src={expandedPlace?.heroImage}
-              alt={expandedPlace.title}
-              className="rounded-lg mb-6 w-full object-cover max-h-80"
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.3 }}
-            />
-            <h2 className="text-3xl font-bold mb-4">{expandedPlace.title}</h2>
+            {/* Hero Image */}
+            <div className="flex justify-center mb-6">
+              <motion.img
+                src={expandedPlace.heroImage}
+                alt={expandedPlace.title}
+                className="rounded-lg object-contain w-full"
+                style={{ maxHeight: "320px", maxWidth: "100%" }}
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              />
+            </div>
+
+            {/* Title & Descriptions */}
+            <h2 className="text-3xl font-bold mb-4 text-center">{expandedPlace.title}</h2>
             {[...Array(5).keys()].map((i) => (
               <p key={i} className="text-gray-700 leading-relaxed mb-6">
                 {expandedPlace[`fullDescription${i === 0 ? "" : i + 1}`]}
@@ -517,6 +564,7 @@ export const ExpandableCard = ({ title, file }) => {
     </section>
   );
 };
+
 
 
 
@@ -696,6 +744,9 @@ export const EnquiryForm = ({ packageId }) => {
       email: Yup.string()
         .email('Invalid email address')
         .required('Email is required'),
+      email: Yup.string()
+        .email('Invalid email address')
+        .required('Email is required'),
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
@@ -724,9 +775,9 @@ export const EnquiryForm = ({ packageId }) => {
       transition={{ duration: 0.5 }}
     >
       <Paper elevation={3} sx={{ p: 3, borderRadius: 3, maxWidth: 400, mx: 'auto' }}>
-        <Typography variant="h6" gutterBottom>
+        {/* <Typography variant="h6" gutterBottom>
           Enquire Now
-        </Typography>
+        </Typography> */}
         <form onSubmit={formik.handleSubmit}>
           <TextField
             fullWidth
@@ -766,6 +817,18 @@ export const EnquiryForm = ({ packageId }) => {
 
           <TextField
             fullWidth
+            id="email"
+            name="email"
+            label="Email Address"
+            margin="normal"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
+          />
+
+          <TextField
+            fullWidth
             id="package"
             name="package"
             label="Package ID"
@@ -785,10 +848,6 @@ export const EnquiryForm = ({ packageId }) => {
   );
 };
 
-
-
-
-
 //popup ad
 export function PopupAd() {
   const [show, setShow] = useState(false);
@@ -806,29 +865,58 @@ export function PopupAd() {
     }
   }, []);
 
-  if (!show) return null;
-
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-      <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full text-center relative">
-        <button
-          onClick={() => setShow(false)}
-          className="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-2xl"
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
         >
-          &times;
-        </button>
-        <h2 className="text-2xl font-bold mb-2">Special Umrah Discount!</h2>
-        <p className="text-gray-700 mb-4">
-          Book now and get up to <strong>15% off</strong> on all Umrah packages.
-        </p>
-        <a
-          href="/packages"
-          className="inline-block bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark"
-        >
-          View Packages
-        </a>
-      </div>
-    </div>
+          <motion.div
+            className="relative w-full max-w-4xl mx-4 bg-white rounded-3xl shadow-2xl overflow-hidden p-6 md:p-10"
+            initial={{ scale: 0.7, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.7, opacity: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setShow(false)}
+              className="absolute top-4 right-4 text-gray-500 hover:text-red-600 text-2xl"
+            >
+              <FaTimesCircle />
+            </button>
+
+            {/* Image */}
+            <img
+              src="/images/pack.png"
+              alt="Umrah Discount"
+              className="w-full h-60 object-cover rounded-2xl mb-6"
+            />
+
+            {/* Ad Content */}
+            <div className="text-center px-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-emerald-700 mb-4">
+                ✨ Special Umrah Discount!
+              </h2>
+              <p className="text-gray-800 mb-6 text-lg">
+                Book now and enjoy up to{" "}
+                <span className="font-bold text-red-600">15% OFF</span> on all
+                Umrah packages. Limited time only!
+              </p>
+              <a
+                href="/packages"
+                className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-full font-semibold text-lg shadow hover:scale-105 transition-transform duration-300 inline-block"
+              >
+                View Packages
+              </a>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
