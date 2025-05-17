@@ -33,7 +33,7 @@ const Footer = () => {
           {/* Column 2: Links */}
           <div>
             <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
+            <ul className="grid grid-cols-2 gap-2">
               <li>
                 <a href="/" className="hover:text-gray-400">Home</a>
               </li>
@@ -44,7 +44,16 @@ const Footer = () => {
                 <a href="/madina" className="hover:text-gray-400">Madina</a>
               </li>
               <li>
-                <a href="/guide" className="hover:text-gray-400">Travel Guide</a>
+                <a href="/hajj" className="hover:text-gray-400">Hajj</a>
+              </li>
+              <li>
+                <a href="/umrah" className="hover:text-gray-400">Umrah</a>
+              </li>
+              <li>
+                <a href="/packages" className="hover:text-gray-400">Packages</a>
+              </li>
+              <li>
+                <a href="/about" className="hover:text-gray-400">About Us</a>
               </li>
             </ul>
           </div>

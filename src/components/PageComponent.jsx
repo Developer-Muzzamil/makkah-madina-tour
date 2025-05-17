@@ -1,13 +1,15 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Button, FormLabel, TextField, TextareaAutosize, Box, Typography, Paper } from "@mui/material";
+import { Button, FormLabel, TextField, TextareaAutosize} from "@mui/material";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from "react-router-dom";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { FaTimesCircle } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
+import ReactDOM from "react-dom";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 const API_URL = import.meta.env.VITE_API_URL;
 import { Formik, Form, Field, ErrorMessage,useFormik} from "formik";
 import * as Yup from "yup";
+import { FaTimesCircle } from "react-icons/fa";
+
 
 
 //herosection
@@ -63,17 +65,17 @@ export const HeroSection = ({
         <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white break-words">
           {title2}
         </h2>
-        <p className="text-lg md:text-xl text-white break-words">
+        <p className="text-lg md:text-2xl text-white break-words">
           {subtitle}
         </p>
 
         {/* Dynamic Hadith Section */}
         {hadithText && (
           <div className="mt-8 mx-auto w-[90%] md:w-[62%] bg-white/30 backdrop-blur-sm rounded-xl p-4 md:p-6 shadow-lg">
-            <p className="text-xl md:text italic text-white leading-relaxed">
+            <p className="text-sm md:text-xl italic text-white leading-relaxed">
               “{hadithText}”
               {hadithSource && (
-                <span className="text-2xl block mt-2 text-gray-200">– {hadithSource}</span>
+                <span className="text-xl block mt-2 text-gray-200">– {hadithSource}</span>
               )}
             </p>
           </div>
@@ -255,17 +257,7 @@ export const PlacesCards = ({ title, places }) => {
   );
 };
 
-
-
-const listItemVariants = {
-  hidden: { opacity: 0, x: -20 },
-  visible: (i) => ({
-    opacity: 1,
-    x: 0,
-    transition: { delay: i * 0.1 },
-  }),
-};
-
+//expcardabt
 export const CardE = ({ title, places = [] }) => {
   const [expandedIndex, setExpandedIndex] = useState(null);
 
@@ -276,7 +268,6 @@ export const CardE = ({ title, places = [] }) => {
       else if (window.innerWidth < 1024) root.style.setProperty("--grid-cols", "2");
       else root.style.setProperty("--grid-cols", "3");
     };
-
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -284,44 +275,107 @@ export const CardE = ({ title, places = [] }) => {
 
   const expandedPlace = expandedIndex !== null ? places[expandedIndex] : null;
 
-  return (
-    <section className="w-full font-[Inter] bg-green-100 py-10 px-4">
-      <motion.h2
-        className="text-4xl font-extrabold text-center text-indigo-800 mb-10"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        {title}
-      </motion.h2>
+  // Animation configs with more delay for extra smoothness
+  const backdropVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: 0.7, delay: 0.07, ease: [0.4, 0, 0.2, 1] }
+    },
+    exit: { opacity: 0, transition: { duration: 0.45, ease: [0.4, 0, 0.2, 1] } }
+  };
 
+  const modalParentVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        delayChildren: 0.33, // increased delay for child entrance
+        staggerChildren: 0.14
+      }
+    }
+  };
+
+  const modalCardVariants = {
+    hidden: { opacity: 0, scale: 0.96, y: 60 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: { duration: 0.65, delay: 0.18, ease: [0.4, 0, 0.2, 1] }
+    },
+    exit: { opacity: 0, scale: 0.96, y: 60, transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] } }
+  };
+
+  const columnVariants = {
+    hidden: { opacity: 0, y: 36 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.65, ease: [0.4, 0, 0.2, 1] }
+    },
+    exit: { opacity: 0, y: 36, transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] } }
+  };
+
+  const gradientBg = "bg-gradient-to-br from-[#f8fafc] via-[#f9efe3] to-[#e9f8f5]";
+
+  const Modal = ({ children, onClose }) =>
+    ReactDOM.createPortal(
+      <AnimatePresence>
+        <motion.div
+          key="modal-backdrop"
+          className="fixed inset-0 z-[2000] flex items-center justify-center min-h-screen bg-[rgba(20,24,34,0.68)] backdrop-blur-md"
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          variants={backdropVariants}
+          onClick={onClose}
+        >
+          <motion.div
+            className={`${gradientBg} relative w-full max-w-3xl md:max-w-4xl max-h-[90vh] my-8 rounded-3xl shadow-2xl flex flex-col md:flex-row border border-yellow-50`}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={modalCardVariants}
+            onClick={e => e.stopPropagation()}
+          >
+            <motion.div
+              className="flex w-full md:flex-row flex-col"
+              variants={modalParentVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+            >
+              {children}
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </AnimatePresence>,
+      document.body
+    );
+
+  return (
+    <section className="w-full">
+      <h2 className="text-3xl font-bold text-center mb-10">{title}</h2>
       <div
         className="grid gap-8 justify-items-center mx-auto"
         style={{
           gridTemplateColumns: `repeat(var(--grid-cols, 1), minmax(0, 1fr))`,
+          maxWidth: "100%",
         }}
       >
         {places.map((place, index) => (
           <motion.div
             key={place.id || index}
-            className="bg-gradient-to-br from-white via-slate-100 to-gray-50 shadow-xl rounded-2xl overflow-hidden cursor-pointer transform w-full max-w-sm border border-gray-200"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 300 }}
+            className="bg-white/80 shadow-md rounded-xl overflow-hidden cursor-pointer transition-transform hover:scale-105 duration-300 w-full max-w-sm border border-yellow-100"
+            whileHover={{ scale: 1.04, boxShadow: "0 8px 32px #e9f8f570" }}
             onClick={() => setExpandedIndex(index)}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
           >
-            <img
-              src={place.image}
-              alt={place.name}
-              className="w-full h-44 object-cover"
-            />
-            <div className="p-5">
-              <h3 className="text-2xl font-semibold text-gray-900 mb-1">
+            <div className="p-4">
+              <h3 className="text-xl font-semibold mb-2">
                 {place.tier} – {place.name}
               </h3>
               <p className="text-gray-600 text-sm">{place.description}</p>
-              <p className="text-md mt-3 font-semibold text-green-700">
+              <p className="text-sm mt-2 font-semibold text-green-600">
                 {place.startingPrice}
               </p>
             </div>
@@ -329,86 +383,109 @@ export const CardE = ({ title, places = [] }) => {
         ))}
       </div>
 
+      {/* Animated Portal Modal */}
       <AnimatePresence>
         {expandedPlace && (
-          <motion.div
-            className="fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setExpandedIndex(null)}
-          >
+          <Modal onClose={() => setExpandedIndex(null)}>
+            {/* Left Column: Package Details */}
             <motion.div
-              className="relative bg-gradient-to-br from-white via-slate-50 to-gray-100 rounded-2xl shadow-2xl w-[90%] md:w-[80%] max-h-[90vh] overflow-y-auto p-6"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.4 }}
-              onClick={(e) => e.stopPropagation()}
+              className="md:w-2/3 w-full text-left p-8 md:p-10 md:pr-0 overflow-auto flex flex-col justify-center"
+              variants={columnVariants}
             >
-              <h2 className="text-3xl font-bold text-center text-indigo-900 mb-6">
-                {expandedPlace.tier} – {expandedPlace.name}
-              </h2>
-
-              <div className="flex flex-col md:flex-row gap-6">
-                {/* Left: Package Details */}
-                <div className="md:w-2/3 text-gray-800 space-y-3 text-[15px]">
-                  <p className="italic text-gray-600">{expandedPlace.description}</p>
-                  <ul className="list-disc list-inside text-left space-y-2">
-                    {[
-                      ["Duration", expandedPlace.duration],
-                      ["Makkah Hotel", expandedPlace.makkahHotel],
-                      ["Madinah Hotel", expandedPlace.madinahHotel],
-                      ["Transport", expandedPlace.transport],
-                      ["Meals", expandedPlace.meals],
-                      ["Ziyarat Tour", expandedPlace.ziyarat],
-                      expandedPlace.visaAndInsurance && ["Visa & Insurance", expandedPlace.visaAndInsurance],
-                      expandedPlace.visaInsuranceSim && ["Visa, Insurance & SIM", expandedPlace.visaInsuranceSim],
-                      expandedPlace.visaInsuranceVIP && ["Visa, Insurance, VIP Lounge", expandedPlace.visaInsuranceVIP],
-                      ["Group Size", expandedPlace.groupSize],
-                      ["Extras", expandedPlace.extras.join(", ")],
-                      ["Starting From", expandedPlace.startingPrice],
-                    ]
-                      .filter(Boolean)
-                      .map(([label, value], i) => (
-                        <motion.li
-                          key={label}
-                          custom={i}
-                          initial="hidden"
-                          animate="visible"
-                          variants={listItemVariants}
-                          className="text-gray-800"
-                        >
-                          <strong>{label}:</strong> {value}
-                        </motion.li>
-                      ))}
-                  </ul>
-                </div>
-
-                {/* Right: Form */}
-                <div className="md:w-1/3 bg-white p-6 rounded-xl shadow-inner border border-slate-200">
-                  <h3 className="text-xl font-semibold text-center mb-4">Enquire Now</h3>
-                  <EnquiryForm
-                    packageId={
-                      expandedPlace.id ||
-                      expandedPlace.packageId ||
-                      `umrah-${expandedIndex}`
-                    }
-                  />
-                </div>
-              </div>
+              <motion.h3
+                className="text-3xl md:text-4xl font-extrabold text-[#168c5f] mb-2 tracking-tight drop-shadow-lg"
+                initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1, transition: { delay: 0.38, duration: 0.55, ease: [0.4, 0, 0.2, 1] } }}
+              >
+                {expandedPlace.tier} <span className="text-gray-900">– {expandedPlace.name}</span>
+              </motion.h3>
+              <motion.p
+                className="mb-6 text-gray-700 text-lg italic"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0, transition: { delay: 0.42, duration: 0.48, ease: [0.4, 0, 0.2, 1] } }}
+              >
+                {expandedPlace.description}
+              </motion.p>
+              <motion.ul
+                className="list-none space-y-3 text-gray-800"
+                initial={{ opacity: 0, x: -16 }}
+                animate={{ opacity: 1, x: 0, transition: { delay: 0.5, duration: 0.38, ease: [0.4, 0, 0.2, 1] } }}
+              >
+                <li>
+                  <span className="font-bold text-[#168c5f] mr-2">⏳ Duration:</span>
+                  {expandedPlace.duration}
+                </li>
+                <li>
+                  <span className="font-bold text-[#168c5f] mr-2">🏨 Makkah Hotel:</span>
+                  {expandedPlace.makkahHotel}
+                </li>
+                <li>
+                  <span className="font-bold text-[#168c5f] mr-2">🏨 Madinah Hotel:</span>
+                  {expandedPlace.madinahHotel}
+                </li>
+                <li>
+                  <span className="font-bold text-[#168c5f] mr-2">🚐 Transport:</span>
+                  {expandedPlace.transport}
+                </li>
+                <li>
+                  <span className="font-bold text-[#168c5f] mr-2">🍽 Meals:</span>
+                  {expandedPlace.meals}
+                </li>
+                <li>
+                  <span className="font-bold text-[#168c5f] mr-2">🕌 Ziyarat Tour:</span>
+                  {expandedPlace.ziyarat}
+                </li>
+                {expandedPlace.visaAndInsurance && (
+                  <li>
+                    <span className="font-bold text-[#168c5f] mr-2">🛂 Visa & Insurance:</span>
+                    {expandedPlace.visaAndInsurance}
+                  </li>
+                )}
+                {expandedPlace.visaInsuranceSim && (
+                  <li>
+                    <span className="font-bold text-[#168c5f] mr-2">🛂 Visa, Insurance & SIM:</span>
+                    {expandedPlace.visaInsuranceSim}
+                  </li>
+                )}
+                {expandedPlace.visaInsuranceVIP && (
+                  <li>
+                    <span className="font-bold text-[#168c5f] mr-2">🛂 Visa, Insurance, VIP Lounge:</span>
+                    {expandedPlace.visaInsuranceVIP}
+                  </li>
+                )}
+                <li>
+                  <span className="font-bold text-[#168c5f] mr-2">👥 Group Size:</span>
+                  {expandedPlace.groupSize}
+                </li>
+                <li>
+                  <span className="font-bold text-[#168c5f] mr-2">🎁 Extras:</span>
+                  {expandedPlace.extras.join(", ")}
+                </li>
+                <li>
+                  <span className="font-bold text-[#168c5f] mr-2">💰 Starting From:</span>
+                  {expandedPlace.startingPrice}
+                </li>
+              </motion.ul>
             </motion.div>
-          </motion.div>
+            {/* Right Column: Enquiry Form */}
+            <motion.div
+              className="md:w-1/3 w-full bg-white/80 p-8 rounded-r-3xl shadow-inner flex flex-col justify-start border-l border-yellow-50"
+              variants={columnVariants}
+            >
+              <EnquiryForm packageId={expandedPlace.id || expandedPlace.packageId || `umrah-${expandedIndex}`} />
+            </motion.div>
+          </Modal>
         )}
       </AnimatePresence>
     </section>
   );
 };
-
-
-
-
 //Json Cards 
+const navBtn =
+  "rounded-lg px-4 py-2 font-semibold border border-gray-200 bg-white/90 text-gray-700 hover:bg-gray-100 transition focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-offset-2 disabled:opacity-40 disabled:cursor-not-allowed";
+const backBtn =
+  "rounded-lg px-4 py-2 font-medium border border-gray-200 bg-white/90 text-gray-400 hover:bg-gray-200 absolute top-5 left-5 z-10 flex items-center gap-2 shadow-sm";
+
 export const ExpandableCard = ({ title, file }) => {
   const [places, setPlaces] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -422,7 +499,7 @@ export const ExpandableCard = ({ title, file }) => {
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Failed to fetch from API:", err);
+        console.error(`Failed to fetch from API:`, err);
         setLoading(false);
       });
   }, [file]);
@@ -442,13 +519,43 @@ export const ExpandableCard = ({ title, file }) => {
 
   const expandedPlace = expandedIndex !== null ? places[expandedIndex] : null;
 
+  // Animation variants for cards
+  const cardVariants = {
+    hidden: { opacity: 0, y: 40, scale: 0.96 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        delay: i * 0.08,
+        type: "spring",
+        stiffness: 350,
+        damping: 25,
+      },
+    }),
+  };
+
+  // Animation variants for modal
+  const modalVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.35, ease: [0.4, 0, 0.2, 1] } },
+    exit: { opacity: 0, scale: 0.97, transition: { duration: 0.23, ease: [0.4, 0, 0.2, 1] } },
+  };
+
   if (loading) {
     return <div className="text-center py-12 text-lg">Loading places...</div>;
   }
 
   return (
-    <section className="py-12 px-4 md:px-12 bg-gray-50">
-      <h2 className="text-3xl font-bold text-center mb-10">{title}</h2>
+    <section className="py-12 px-4 md:px-12 bg-gradient-to-b from-white to-gray-50 min-h-screen">
+      <motion.h2
+        className="text-3xl md:text-4xl font-extrabold text-center mb-10 text-gray-900 drop-shadow"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
+        {title}
+      </motion.h2>
       <div
         className="grid gap-8 justify-items-center"
         style={{
@@ -456,118 +563,176 @@ export const ExpandableCard = ({ title, file }) => {
         }}
       >
         {places.map((place, index) => (
-          <div
+          <motion.div
             key={place.id}
-            className="bg-white shadow-md rounded-xl overflow-hidden cursor-pointer transition-transform hover:scale-105 duration-300 w-full max-w-sm"
+            className="bg-white/90 shadow-xl rounded-2xl overflow-hidden cursor-pointer hover:scale-[1.031] transition-transform duration-300 w-full max-w-sm border border-gray-200 group"
+            custom={index}
+            initial="hidden"
+            animate="visible"
+            variants={cardVariants}
+            whileHover={{
+              y: -4,
+              boxShadow: "0 8px 32px 0 rgba(30, 41, 59, 0.10)",
+            }}
             onClick={() => setExpandedIndex(index)}
+            layout
           >
-            <img src={place.image} alt={place.title} className="w-full h-48 object-cover" />
-            <div className="p-4">
-              <h3 className="text-xl font-semibold mb-2">{place.title}</h3>
-              <p className="text-gray-600 text-sm">{place.shortDescription}</p>
+            <motion.img
+              src={place.image}
+              alt={place.title}
+              className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+              initial={{ scale: 1 }}
+              whileHover={{ scale: 1.05 }}
+            />
+            <div className="p-5">
+              <h3 className="text-xl font-semibold mb-2 text-gray-900">{place.title}</h3>
+              <p className="text-gray-700 text-sm">{place.shortDescription}</p>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
 
-      {expandedPlace && (
-        <motion.div
-          className="fixed inset-0 bg-black bg-opacity-60 z-50 flex justify-center items-center"
-          onClick={() => setExpandedIndex(null)}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-        >
+      <AnimatePresence>
+        {expandedPlace && (
           <motion.div
-            className="relative bg-white w-[90%] md:w-[70%] max-h-[90vh] overflow-y-auto rounded-xl shadow-lg p-6"
-            onClick={(e) => e.stopPropagation()}
-            initial={{ scale: 0.9 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-50 flex justify-center items-center"
+            onClick={() => setExpandedIndex(null)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+            style={{
+              background: "rgba(16,18,23,0.84)",
+              backdropFilter: "blur(18px)",
+              WebkitBackdropFilter: "blur(18px)",
+            }}
           >
-            {/* Back Button */}
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => setExpandedIndex(null)}
-              sx={{
-                position: "absolute",
-                top: 16,
-                left: 16,
-                textTransform: "none",
+            <motion.div
+              className="relative w-[98vw] md:w-[75vw] max-h-[93vh] overflow-y-auto rounded-3xl shadow-2xl p-0 border border-gray-200 transition bg-white/95"
+              onClick={(e) => e.stopPropagation()}
+              variants={modalVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              layout
+              style={{
+                boxShadow:
+                  "0 4px 32px 0 rgba(30, 41, 59, 0.20), 0 1.5px 6px 0 rgba(253, 230, 138, 0.12)",
+                border: "1px solid #fef3c7",
               }}
-              startIcon={<FaArrowLeft />}
             >
-              Back
-            </Button>
-
-            {/* Navigation Buttons */}
-            <div className="flex justify-end gap-4 mb-4 mt-2">
-              <Button
-                onClick={() => setExpandedIndex((prev) => prev - 1)}
-                disabled={expandedIndex <= 0}
-                startIcon={<FaArrowLeft />}
-                variant="outlined"
+              {/* Back Button */}
+              <motion.button
+                onClick={() => setExpandedIndex(null)}
+                className={backBtn}
+                tabIndex={0}
+                aria-label="Close card"
+                whileTap={{ scale: 0.94 }}
+                whileHover={{ scale: 1.05 }}
               >
-                Prev
-              </Button>
-              <Button
-                onClick={() => setExpandedIndex((prev) => prev + 1)}
-                disabled={expandedIndex >= places.length - 1}
-                endIcon={<FaArrowRight />}
-                variant="outlined"
-              >
-                Next
-              </Button>
-            </div>
+                <FaArrowLeft className="mr-1" /> Back
+              </motion.button>
 
-            {/* Hero Image */}
-            <div className="flex justify-center mb-6">
-              <motion.img
-                src={expandedPlace.heroImage}
-                alt={expandedPlace.title}
-                className="rounded-lg object-contain w-full"
-                style={{ maxHeight: "320px", maxWidth: "100%" }}
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              />
-            </div>
-
-            {/* Title & Descriptions */}
-            <h2 className="text-3xl font-bold mb-4 text-center">{expandedPlace.title}</h2>
-            {[...Array(5).keys()].map((i) => (
-              <p key={i} className="text-gray-700 leading-relaxed mb-6">
-                {expandedPlace[`fullDescription${i === 0 ? "" : i + 1}`]}
-              </p>
-            ))}
-
-            {/* Gallery */}
-            {expandedPlace.gallery?.length > 0 && (
-              <div className="mt-8">
-                <h3 className="text-xl font-semibold mb-4">Gallery</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {expandedPlace.gallery.map((img, idx) => (
-                    <motion.img
-                      key={idx}
-                      src={img}
-                      alt={`${expandedPlace.title} ${idx + 1}`}
-                      className="rounded-lg object-cover w-full h-40"
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  ))}
-                </div>
+              {/* Navigation */}
+              <div className="flex justify-end gap-3 mb-2 mt-5 px-6">
+                <motion.button
+                  onClick={() => setExpandedIndex((prev) => prev - 1)}
+                  disabled={expandedIndex <= 0}
+                  className={navBtn + " flex items-center gap-2"}
+                  tabIndex={0}
+                  aria-label="Previous"
+                  whileTap={{ scale: 0.96 }}
+                  whileHover={{ scale: 1.04 }}
+                >
+                  <FaArrowLeft />
+                  Prev
+                </motion.button>
+                <motion.button
+                  onClick={() => setExpandedIndex((prev) => prev + 1)}
+                  disabled={expandedIndex >= places.length - 1}
+                  className={navBtn + " flex items-center gap-2"}
+                  tabIndex={0}
+                  aria-label="Next"
+                  whileTap={{ scale: 0.96 }}
+                  whileHover={{ scale: 1.04 }}
+                >
+                  Next
+                  <FaArrowRight />
+                </motion.button>
               </div>
-            )}
+
+              {/* Modal Content - HERO IMAGE AND CONTENT FULL WIDTH, ROUNDED CORNERS, REDUCED HEIGHT */}
+              <div className="w-full">
+                <div className="w-full px-[20px]">
+                  <motion.img
+                    src={expandedPlace?.heroImage || expandedPlace?.image}
+                    alt={expandedPlace?.title || "Image"}
+                    className="object-cover w-full max-h-94 rounded-3xl bg-white"
+                    style={{ background: "#fefce8" }}
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                    whileHover={{ scale: 1.01 }}
+                  />
+                </div>
+                <motion.div
+                  className="w-full px-8 pb-10 pt-8"
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1, duration: 0.5 }}
+                >
+                  <h2 className="text-2xl md:text-3xl font-bold mb-2 text-gray-900 tracking-tight text-center">
+                    {expandedPlace.title}
+                  </h2>
+                  {[...Array(5).keys()].map((i) => {
+                    const desc = expandedPlace[`fullDescription${i === 0 ? "" : i + 1}`];
+                    return desc ? (
+                      <motion.p
+                        key={i}
+                        className="text-gray-700 leading-relaxed mb-4 text-base rounded-xl bg-white/80 px-4 py-2 shadow-sm border border-yellow-50 mx-auto max-w-full"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.23 + i * 0.08, duration: 0.4 }}
+                        style={{ width: "100%" }}
+                      >
+                        {desc}
+                      </motion.p>
+                    ) : null;
+                  })}
+
+                  {/* Gallery */}
+                  {expandedPlace.gallery?.length > 0 && (
+                    <div className="mt-7">
+                      <h3 className="text-lg font-semibold mb-3 text-yellow-700">Gallery</h3>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        {expandedPlace.gallery.map((img, idx) => (
+                          <motion.div
+                            key={idx}
+                            className="rounded-lg overflow-hidden shadow border border-yellow-50 bg-white"
+                            initial={{ opacity: 0, scale: 0.96 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.18 + idx * 0.06, duration: 0.25 }}
+                            whileHover={{ scale: 1.04 }}
+                          >
+                            <img
+                              src={img}
+                              alt={`${expandedPlace.title} ${idx + 1}`}
+                              className="object-cover w-full h-32"
+                            />
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </motion.div>
+              </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      )}
+        )}
+      </AnimatePresence>
     </section>
   );
 };
-
-
-
-
 // Contact Us Form
 export const ContactUs = () => {
   const initialValues = {
@@ -613,12 +778,8 @@ export const ContactUs = () => {
     }
   };
   
-  
-  
-  
-
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen">
       <div className="w-full max-w-3xl p-6 bg-white shadow-xl rounded-lg">
         <h2 className="text-3xl font-semibold text-center mb-6 text-gray-800">
           Contact Us
@@ -713,7 +874,7 @@ export const ContactUs = () => {
 
               <Button
                 type="submit"
-                className="w-full py-3 bg-primary text-white rounded-md hover:bg-primary-dark transition duration-300"
+                className="w-full py-3 bg-primary text-white rounded-md hover:bg-primary-yellow-500 transition duration-300"
               >
                 Send Message
               </Button>
@@ -729,140 +890,210 @@ export const ContactUs = () => {
 
 //Enquiry Form
 export const EnquiryForm = ({ packageId }) => {
+  const [submitted, setSubmitted] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const formik = useFormik({
     initialValues: {
-      name: '',
-      phone: '',
-      email: '',
-      packageId: packageId || '',
+      name: "",
+      phone: "",
+      email: "",
+      packageId: packageId || "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required('Name is required'),
+      name: Yup.string().required("Name is required"),
       phone: Yup.string()
-        .matches(/^[0-9]{10}$/, 'Phone must be 10 digits')
-        .required('Phone is required'),
+        .matches(/^[0-9]{10}$/, "Phone must be 10 digits")
+        .required("Phone is required"),
       email: Yup.string()
-        .email('Invalid email address')
-        .required('Email is required'),
-      email: Yup.string()
-        .email('Invalid email address')
-        .required('Email is required'),
+        .email("Invalid email address")
+        .required("Email is required"),
     }),
     onSubmit: async (values, { resetForm }) => {
+      setLoading(true);
+      setErrorMsg("");
       try {
         const res = await fetch(`${API_URL}/enquiry`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(values),
         });
         if (res.ok) {
-          alert('Enquiry submitted successfully!');
+          setSubmitted(true);
           resetForm();
         } else {
-          alert('Failed to submit enquiry.');
+          setErrorMsg("Failed to submit enquiry. Please try again later.");
         }
       } catch (error) {
-        alert('Something went wrong.');
+        setErrorMsg("Something went wrong.");
         console.error(error);
       }
+      setLoading(false);
     },
   });
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      initial={{ opacity: 0, y: 40, scale: 0.97 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: 20, scale: 0.97 }}
+      transition={{ duration: 0.65, ease: [0.4, 0, 0.2, 1] }}
+      className="w-full"
     >
-      <Paper elevation={3} sx={{ p: 3, borderRadius: 3, maxWidth: 400, mx: 'auto' }}>
-        {/* <Typography variant="h6" gutterBottom>
-          Enquire Now
-        </Typography> */}
-        <form onSubmit={formik.handleSubmit}>
-          <TextField
-            fullWidth
-            id="name"
-            name="name"
-            label="Your Name"
-            margin="normal"
-            value={formik.values.name}
-            onChange={formik.handleChange}
-            error={formik.touched.name && Boolean(formik.errors.name)}
-            helperText={formik.touched.name && formik.errors.name}
-          />
-
-          <TextField
-            fullWidth
-            id="phone"
-            name="phone"
-            label="Phone Number"
-            margin="normal"
-            value={formik.values.phone}
-            onChange={formik.handleChange}
-            error={formik.touched.phone && Boolean(formik.errors.phone)}
-            helperText={formik.touched.phone && formik.errors.phone}
-          />
-
-          <TextField
-            fullWidth
-            id="email"
-            name="email"
-            label="Email Address"
-            margin="normal"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
-          />
-
-          <TextField
-            fullWidth
-            id="email"
-            name="email"
-            label="Email Address"
-            margin="normal"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
-          />
-
-          <TextField
-            fullWidth
-            id="package"
-            name="package"
-            label="Package ID"
-            margin="normal"
-            value={formik.values.packageId}
-            disabled
-          />
-
-          <Box mt={2}>
-            <Button color="primary" variant="contained" fullWidth type="submit">
-              Submit
-            </Button>
-          </Box>
-        </form>
-      </Paper>
+      <div className="relative bg-white/80 backdrop-blur-md border border-yellow-100 rounded-2xl shadow-xl px-5 py-6 md:px-7">
+        <AnimatePresence>
+          {submitted ? (
+            <motion.div
+              key="success"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 24 }}
+              transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
+              className="flex flex-col items-center py-8"
+            >
+              <span className="text-4xl mb-2">🎉</span>
+              <h4 className="text-xl font-bold text-[#168c5f] mb-2">Thank you!</h4>
+              <p className="text-gray-700 font-medium text-center mb-2">
+                Your enquiry has been submitted.<br />
+                We'll contact you soon.
+              </p>
+              <button
+                className="mt-4 px-4 py-2 bg-gradient-to-r from-yellow-300 via-[#168c5f] to-yellow-300 rounded-lg text-gray-900 font-semibold shadow hover:scale-105 transition"
+                onClick={() => setSubmitted(false)}
+              >
+                New Enquiry
+              </button>
+            </motion.div>
+          ) : (
+            <motion.form
+              key="form"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 24 }}
+              transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
+              onSubmit={formik.handleSubmit}
+              className="space-y-3"
+              autoComplete="off"
+            >
+              <h3 className="text-2xl font-extrabold text-center text-[#168c5f] mb-2 tracking-tight">
+                Enquire Now
+              </h3>
+              <div>
+                <label htmlFor="name" className="block text-sm font-bold mb-1 text-gray-800">
+                  Your Name
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="Enter your name"
+                  className={`w-full rounded-lg border px-3 py-2 bg-white/80 focus:outline-none focus:ring-2 focus:ring-yellow-200 font-medium text-gray-900 ${formik.touched.name && formik.errors.name ? 'border-red-400' : 'border-yellow-200'}`}
+                  value={formik.values.name}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  disabled={loading}
+                />
+                {formik.touched.name && formik.errors.name && (
+                  <div className="text-xs text-red-500 mt-1">{formik.errors.name}</div>
+                )}
+              </div>
+              <div>
+                <label htmlFor="phone" className="block text-sm font-bold mb-1 text-gray-800">
+                  Phone Number
+                </label>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  placeholder="e.g. 0312345678"
+                  className={`w-full rounded-lg border px-3 py-2 bg-white/80 focus:outline-none focus:ring-2 focus:ring-yellow-200 font-medium text-gray-900 ${formik.touched.phone && formik.errors.phone ? 'border-red-400' : 'border-yellow-200'}`}
+                  value={formik.values.phone}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  disabled={loading}
+                />
+                {formik.touched.phone && formik.errors.phone && (
+                  <div className="text-xs text-red-500 mt-1">{formik.errors.phone}</div>
+                )}
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-bold mb-1 text-gray-800">
+                  Email Address
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  className={`w-full rounded-lg border px-3 py-2 bg-white/80 focus:outline-none focus:ring-2 focus:ring-yellow-200 font-medium text-gray-900 ${formik.touched.email && formik.errors.email ? 'border-red-400' : 'border-yellow-200'}`}
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  disabled={loading}
+                />
+                {formik.touched.email && formik.errors.email && (
+                  <div className="text-xs text-red-500 mt-1">{formik.errors.email}</div>
+                )}
+              </div>
+              <div>
+                <label htmlFor="packageId" className="block text-sm font-bold mb-1 text-gray-800">
+                  Package ID
+                </label>
+                <input
+                  id="packageId"
+                  name="packageId"
+                  type="text"
+                  className="w-full rounded-lg border border-yellow-200 px-3 py-2 bg-gray-100 text-gray-800 font-medium"
+                  value={formik.values.packageId}
+                  disabled
+                />
+              </div>
+              {errorMsg && (
+                <div className="text-xs text-red-600 text-center mt-1">{errorMsg}</div>
+              )}
+              <motion.button
+                type="submit"
+                className={`w-full py-2 px-4 rounded-lg font-bold text-white bg-gradient-to-r from-yellow-400 via-[#168c5f] to-yellow-400 shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-offset-2 ${
+                  loading ? "opacity-60 pointer-events-none" : "hover:scale-105"
+                }`}
+                whileTap={{ scale: 0.97 }}
+                disabled={loading}
+              >
+                {loading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-30" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                      <path className="opacity-80" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/>
+                    </svg>
+                    Sending...
+                  </span>
+                ) : (
+                  "Submit"
+                )}
+              </motion.button>
+            </motion.form>
+          )}
+        </AnimatePresence>
+      </div>
     </motion.div>
   );
 };
+
+
+
 
 //popup ad
 export function PopupAd() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    const hasShown = sessionStorage.getItem("popup_shown");
+    // Only show once per page load (not per session)
+    const timer = setTimeout(() => {
+      setShow(true);
+    }, 6000); // 6 seconds delay
 
-    if (!hasShown) {
-      const timer = setTimeout(() => {
-        setShow(true);
-        sessionStorage.setItem("popup_shown", "true");
-      }, 6000); // 6 seconds delay
-
-      return () => clearTimeout(timer);
-    }
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -920,6 +1151,9 @@ export function PopupAd() {
   );
 }
 
+
+
+// to id 
 export const ScrollToHashElement = () => {
   const location = useLocation();
 

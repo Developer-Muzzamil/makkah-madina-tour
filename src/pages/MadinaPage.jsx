@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HeroSection, ImageTextSection, ExpandableCard } from '../components/PageComponent';
 import { FaMapMarkerAlt, FaMosque, FaKaaba, FaLandmark } from 'react-icons/fa';
@@ -25,6 +25,7 @@ const MadinaPage = () => {
       />
 
       {/* Sticky Secondary Navigation */}
+      
       <motion.nav
           className="bg-yellow-200 w-full py-3 shadow sticky top-0 z-50"
           initial={{ opacity: 0 }}
