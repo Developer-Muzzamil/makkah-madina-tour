@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HeroSection } from "../components/PageComponent";
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -128,43 +128,6 @@ function TimelineSection1() {
   );
 }
 
-
-
-// Main Component
-  // return (
-  //   <div className="relative w-full overflow-x-auto py-16">
-  //     <h2 className="text-3xl font-bold mb-12 text-center">Umrah Timeline</h2>
-  //     <div className="relative flex w-max mx-auto items-center justify-between px-8">
-  //       <div className="absolute left-0 right-0 top-1/2 h-1 bg-amber-900 z-0" />
-
-  //       {steps.map((step, index) => (
-  //         <div key={index} className="relative z-10 flex flex-col items-center w-40 mx-4">
-  //           {index % 2 === 0 ? (
-  //             <>
-  //               <div className="mb-2 text-center">
-  //                 <div className="font-semibold text-purple-800">Step {index + 1}</div>
-  //                 <div className="text-xs text-amber-700 mt-1">{step}</div>
-  //               </div>
-  //               <div className="w-0.5 h-6 bg-gray-400 mb-2"></div>
-  //               <div className="w-16 h-6 bg-amber-400 rounded-md"></div>
-  //             </>
-  //           ) : (
-  //             <>
-  //               <div className="w-16 h-6 bg-amber-400 rounded-md"></div>
-  //               <div className="w-0.5 h-6 bg-gray-400 mt-2"></div>
-  //               <div className="mt-2 text-center">
-  //                 <div className="font-semibold text-purple-800">Step {index + 1}</div>
-  //                 <div className="text-xs text-amber-700 mt-1">{step}</div>
-  //               </div>
-  //             </>
-  //           )}
-  //         </div>
-  //       ))}
-  //     </div>
-  //   </div>
-  // );
-
-
 const UmrahStepSlider = ({ umrahSteps, autoPlayInterval = 5000 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const sliderRef = useRef(null);
@@ -222,7 +185,8 @@ const UmrahStepSlider = ({ umrahSteps, autoPlayInterval = 5000 }) => {
               <img
                 src={umrahSteps[currentStep].image}
                 alt={umrahSteps[currentStep].title}
-                className="w-full h-100 object-cover rounded-lg mb-5 bg-white shadow-md"
+                className="w-full max-h-60 object-cover rounded-lg mb-5 bg-white shadow-md"
+                // Changed from h-100 to max-h-60 for better layout
               />
 
               <h2 className="text-2xl font-bold mb-2 text-center text-gray-800">
@@ -281,28 +245,19 @@ const UmrahStepSlider = ({ umrahSteps, autoPlayInterval = 5000 }) => {
   );
 };
 
-
-
-
-// Main Component
 const Umrah = () => {
-
   return (
     <div className="flex flex-col items-center justify-center w-full">
       {/* Hero Section */}
-            <HeroSection
-              title="Umrah"
-              subtitle="Purify Your Soul, Strengthen Your Faith, and Seek Divine Mercy"
-              backgroundImage="/images/umrah/mecca-umrah.webp" // Updated path
-              hadithText="The Prophet ﷺ said: 'Whoever performs Umrah and visits the Sacred House of Allah (the Ka'bah) and performs Tawaf, will have his sins forgiven.'"
-              hadithSource="Sunan Ibn Majah 2870"
-            />
-            <TimelineSection1 />
-
+      <HeroSection
+        title="Umrah"
+        subtitle="Purify Your Soul, Strengthen Your Faith, and Seek Divine Mercy"
+        backgroundImage="/images/umrah/mecca-umrah.webp"
+        hadithText="The Prophet ﷺ said: 'Whoever performs Umrah and visits the Sacred House of Allah (the Ka'bah) and performs Tawaf, will have his sins forgiven.'"
+        hadithSource="Sunan Ibn Majah 2870"
+      />
+      <TimelineSection1 />
       <UmrahStepSlider umrahSteps={umrahSteps} />
-
-
-
     </div>
   );
 };

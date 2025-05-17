@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef  } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { HeroSection } from '../components/PageComponent';
@@ -141,7 +141,8 @@ const HajjStepSlider = ({ hajjSteps, autoPlayInterval = 5000 }) => {
               <img
                 src={hajjSteps[currentStep].image}
                 alt={hajjSteps[currentStep].title}
-                className="w-full h-100 object-cover rounded-lg mb-5 bg-white shadow-md"
+                className="w-full max-h-60 object-cover rounded-lg mb-5 bg-white shadow-md"
+                // You can adjust max-h-60 or use max-h-72 as needed
               />
 
               <h2 className="text-2xl font-bold mb-2 text-center text-gray-800">
@@ -194,7 +195,6 @@ const HajjStepSlider = ({ hajjSteps, autoPlayInterval = 5000 }) => {
     </div>
   );
 };
-
 
 const TimelineSection1 = () => {
   const steps = [
