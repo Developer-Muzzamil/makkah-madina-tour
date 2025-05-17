@@ -1,0 +1,199 @@
+[
+    {
+      "id": "madina",
+      "title": "Al-Masjid an-Nabawi (Prophet's Mosque)",
+      "image": "/src/assets/madina/masjid-al-nabawi.jpg",
+      "shortDescription": "The holiest site in Islam located in Masjid al-Haram.",
+      "fullDescription": "",
+      "heroImage": "/src/assets/madina/masjid-al-nabawi.jpg",
+      "gallery": [
+        "/src/assets/makkah/rp/kaaba.jpg",
+        "/src/assets/makkah/aisha_al_rajhi.jpg",
+        "/src/assets/makkah/Masjid-Nimrah.webp",
+        "/src/assets/makkah/albaya.jpg"
+      ]
+    },
+    {
+      "id": "uhud",
+      "title": "Jabal E Uhud (Mount Uhud)",
+      "image": "/src/assets/madina/uhud.jpg",
+      "shortDescription": "The holiest site in Islam located in Masjid al-Haram.",
+      "fullDescription": "The Kaaba is the cube-shaped building at the center of Islam's most sacred mosque.. .",
+      "heroImage": "/src/assets/madina/uhud.jpg",
+      "gallery": [
+        "/src/assets/makkah/noor.jpg",
+        "/src/assets/makkah/door.jpeg",
+        "/src/assets/makkah/hudebiya_Mosque.jpeg",
+        "/src/assets/makkah/Jannat_al-Mu'alla.jpg"
+      ]
+    },   
+    {
+      "id": "qibla",
+      "title": "Masjid E Qiblatain (Mosque of Two Qiblas)",
+      "image": "/src/assets/madina/qiblatain.jpg",
+      "shortDescription": "The holiest site in Islam located in Masjid al-Haram.",
+      "fullDescription": "The Kaaba is the cube-shaped building at the center of Islam's most sacred mosque...",
+      "heroImage": "/src/assets/madina/qiblatain.jpg",
+      "gallery": [
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg"
+      ]
+    },
+    {
+      "id": "quba",
+      "title": "Masjid E Quba (Quba Mosque)",
+      "image": "/src/assets/madina/quba.jpg",
+      "shortDescription": "The holiest site in Islam located in Masjid al-Haram.",
+      "fullDescription": "The Kaaba is the cube-shaped building at the center of Islam's most sacred mosque...",
+      "heroImage": "/src/assets/madina/quba.jpg",
+      "gallery": [
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg"
+      ]
+    },
+    {
+      "id": "baqi",
+      "title": "Jannat al-Baqi (Cementery of Baqi)",
+      "image": "/src/assets/madina/baqi.jpg",
+      "shortDescription": "The holiest site in Islam located in Masjid al-Haram.",
+      "fullDescription": "The Kaaba is the cube-shaped building at the center of Islam's most sacred mosque...",
+      "heroImage": "/src/assets/madina/baqi.jpg",
+      "gallery": [
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg"
+      ]
+    },
+    {
+      "id": "jummah",
+      "title": "Masjid al-Jummah (Friday Mosque)",
+      "image": "/src/assets/madina/jummah.jpg",
+      "shortDescription": "The holiest site in Islam located in Masjid al-Haram.",
+      "fullDescription": "The Kaaba is the cube-shaped building at the center of Islam's most sacred mosque...",
+      "heroImage": "/src/assets/madina/jummah.jpg",
+      "gallery": [
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg"
+      ]
+    },
+    {
+      "id": "ghamama",
+      "title": "Masjid al-Ghamama",
+      "image": "/src/assets/madina/ghamamah.jpg",
+      "shortDescription": "The holiest site in Islam located in Masjid al-Haram.",
+      "fullDescription": "The Kaaba is the cube-shaped building at the center of Islam's most sacred mosque...",
+      "heroImage": "/src/assets/madina/ghamamah.jpg",
+      "gallery": [
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg"
+      ]
+    },
+    {
+      "id": "abu",
+      "title": "Masjid Abu Bakr",
+      "image": "/src/assets/madina/Masjid_Abu_Bakr.jpg",
+      "shortDescription": "The holiest site in Islam located in Masjid al-Haram.",
+      "fullDescription": "The Kaaba is the cube-shaped building at the center of Islam's most sacred mosque...",
+      "heroImage": "/src/assets/madina/Masjid_Abu_Bakr.jpg",
+      "gallery": [
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg"
+      ]
+    },
+    {
+      "id": "ali",
+      "title": "Masjid Ali bin Abi Talib",
+      "image": "/src/assets/madina/history.jpg",
+      "shortDescription": "The holiest site in Islam located in Masjid al-Haram.",
+      "fullDescription": "The Kaaba is the cube-shaped building at the center of Islam's most sacred mosque...",
+      "heroImage": "/src/assets/makkah/Masjid-Nimrah.webp",
+      "gallery": [
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg"
+      ]
+    },
+    {
+      "id": "umar",
+      "title": "Masjid Umar bin al-Khattab",
+      "image": "/src/assets/madina/umar.jpg",
+      "shortDescription": "The holiest site in Islam located in Masjid al-Haram.",
+      "fullDescription": "The Kaaba is the cube-shaped building at the center of Islam's most sacred mosque...",
+      "heroImage": "/src/assets/madina/umar.jpg",
+      "gallery": [
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg"
+      ]
+    },
+    {
+      "id": "umuthman",
+      "title": "Masjid Uthman bin Affan",
+      "image": "/src/assets/madina/jummah.jpg",
+      "shortDescription": "The holiest site in Islam located in Masjid al-Haram.",
+      "fullDescription": "The Kaaba is the cube-shaped building at the center of Islam's most sacred mosque...",
+      "heroImage": "/src/assets/makkah/Masjid-Nimrah.webp",
+      "gallery": [
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg"
+      ]
+    },
+    {
+      "id": "ijabah",
+      "title": "Masjid al-Ijabah",
+      "image": "/src/assets/madina/jummah.jpg",
+      "shortDescription": "The holiest site in Islam located in Masjid al-Haram.",
+      "fullDescription": "The Kaaba is the cube-shaped building at the center of Islam's most sacred mosque...",
+      "heroImage": "/src/assets/makkah/Masjid-Nimrah.webp",
+      "gallery": [
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg"
+      ]
+    },
+    {
+      "id": "bani",
+      "title": "Masjid Bani Haram",
+      "image": "/src/assets/madina/jummah.jpg",
+      "shortDescription": "The holiest site in Islam located in Masjid al-Haram.",
+      "fullDescription": "The Kaaba is the cube-shaped building at the center of Islam's most sacred mosque...",
+      "heroImage": "/src/assets/makkah/Masjid-Nimrah.webp",
+      "gallery": [
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg"
+      ]
+    },
+    {
+      "id": "fath",
+      "title": "Masjid Fath (Victory Mosque) - on Mount Salaa",
+      "image": "/src/assets/madina/jummah.jpg",
+      "shortDescription": "The holiest site in Islam located in Masjid al-Haram.",
+      "fullDescription": "The Kaaba is the cube-shaped building at the center of Islam's most sacred mosque...",
+      "heroImage": "/src/assets/makkah/Masjid-Nimrah.webp",
+      "gallery": [
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg",
+        "/src/assets/makkah/kaaba.jpg"
+      ]
+    }
+  ]
+  

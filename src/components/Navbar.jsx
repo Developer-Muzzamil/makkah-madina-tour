@@ -5,9 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
-
-  const navLinks = ["Home", "Makkah", "Madina", "Hajj", "Umrah", "Packages", "About"];
 
   const navLinkClass = ({ isActive }) =>
     isActive
@@ -16,15 +13,16 @@ const Navbar = () => {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
+  const location = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
     setIsOpen(false);
   }, [location.pathname]);
 
   return (
-    <nav className="bg-black bg-opacity-70 backdrop-blur-lg shadow-md sticky top-0 z-50">
-      <div className="w-full px-4 md:px-6 py-5 flex justify-between items-center relative">
-        {/* Logo */}
+    <nav className="bg-black bg-opacity-60 backdrop-blur-lg shadow-md sticky top-0 z-50">
+      <div className="w-full flex items-center justify-between px-4 md:px-6 py-5 relative">
+        {/* Left: Logo */}
         <div className="flex-none">
           <img
             src="images/ico/DarkLogocUT.PNG"
@@ -33,20 +31,22 @@ const Navbar = () => {
           />
         </div>
 
-        {/* Center NavLinks (Desktop) */}
-        <ul className="hidden md:flex gap-10 text-white font-medium absolute left-1/2 transform -translate-x-1/2">
-          {navLinks.map((link) => (
-            <li key={link}>
-              <NavLink to={`/${link.toLowerCase()}`} className={navLinkClass}>
-                {link}
-              </NavLink>
-            </li>
+        {/* Center: Nav Links (absolute center) */}
+        <div className="absolute left-1/2 transform -translate-x-1/2 hidden md:flex gap-10 text-white font-medium">
+          {["Home", "Makkah", "Madina", "Hajj", "Umrah", "Packages","About"].map((link) => (
+            <NavLink
+              key={link}
+              to={`/${link.toLowerCase()}`}
+              className={navLinkClass}
+            >
+              {link}
+            </NavLink>
           ))}
-        </ul>
+        </div>
 
-        {/* Right Side */}
-        <div className="flex items-center gap-4">
-          {/* Desktop Contact Us */}
+        {/* Right: Contact Us / Menu */}
+        <div className="flex-none">
+          {/* Desktop: Contact Us */}
           <NavLink
             to="/about#contact-form"
             className="hidden md:block text-white hover:text-yellow-400 transition-colors"
@@ -54,7 +54,7 @@ const Navbar = () => {
             Contact Us
           </NavLink>
 
-          {/* Hamburger Menu (Mobile) */}
+          {/* Mobile: Hamburger */}
           <div className="md:hidden text-white">
             <button onClick={toggleMenu}>
               {isOpen ? <X size={28} /> : <Menu size={28} />}
@@ -74,7 +74,7 @@ const Navbar = () => {
             transition={{ type: "spring", damping: 20, stiffness: 200 }}
           >
             <ul className="flex flex-col gap-4 text-white font-medium">
-              {navLinks.map((link) => (
+              {["Home", "Makkah", "Madina", "Hajj", "Umrah","Packages", "About"].map((link) => (
                 <li key={link}>
                   <NavLink
                     to={`/${link.toLowerCase()}`}

@@ -1,0 +1,59 @@
+[
+    {
+      "id": "arafat",
+      "title": "Mount Arafat",
+      "image": "/images/arafat/arafat1.webp",
+      "shortDescription": "The holiest site in Islam located in Masjid al-Haram.",
+      "fullDescription": "Arafat is a vast plain located about 20 km from Makkah and is considered the most important site in Hajj. On the 9th of Dhul-Hijjah, pilgrims gather there for the Day of Arafah, standing in prayer and seeking forgiveness from Allah. This standing (Wuquf) at Arafat is the pinnacle of Hajj, and missing it invalidates the pilgrimage. It is a deeply spiritual day marked by reflection, repentance, and supplication.",
+      "heroImage": "/images/arafat/arafat1.webp",
+      "gallery": [
+        "/images/arafat/arafat2.jpg",
+        "/images/arafat/arafat3.jpg",
+        "/images/arafat/arafat4.jpg",
+        "/images/arafat/arafat5.jpg"
+      ]
+    },
+    {
+      "id": "mina",
+      "title": "Mina (City of Tent)",
+      "image": "/images/mina/mina1.webp",
+      "shortDescription": "The holiest site in Islam located in Masjid al-Haram.",
+      "fullDescription": "Mina is a valley located near Makkah where Hajj pilgrims stay during the 10th to 13th of Dhul-Hijjah. It is best known for the ritual of Rami al-Jamarat—the symbolic stoning of Shaytan at three stone pillars. Mina also hosts thousands of tents that provide accommodation for pilgrims and is the site where animal sacrifices are performed as part of Eid al-Adha. It represents devotion, patience, and the spirit of obedience to Allah.",
+      "heroImage": "/images/mina/mina1.webp",
+      "gallery": [
+        "/images/mina/mina2.jpg",
+        "/images/mina/mina3.jpg",
+        "/images/mina/mina4.jpg",
+        "/images/mina/mina5.jpg"
+      ]
+    },
+    {
+      "id": "muz",
+      "title": "Muzdalifah",
+      "image": "/images/muzdalifa/muzdalifah1.webp",
+      "shortDescription": "The holiest site in Islam located in Masjid al-Haram.",
+      "fullDescription": "Muzdalifah is an open plain located between Arafat and Mina, where Hajj pilgrims gather after sunset on the 9th day of Dhul-Hijjah. They spend the night there under the open sky, offering prayers and collecting pebbles for the ritual of Rami (stoning the pillars symbolizing Shaytan). It is a time of reflection, rest, and preparation for the next steps of Hajj.",
+      "heroImage": "/images/muzdalifa/muzdalifah1.webp",
+      "gallery": [
+        "/images/muzdalifa/muzdalifah2.webp",
+        "/images/muzdalifa/muzdalifah3.webp",
+        "/images/muzdalifa/muzdalifah4.webp",
+        "/images/muzdalifa/muzdalifah5.webp"
+      ]
+    },
+    {
+      "id": "rami",
+      "title": "Rami al-Jamarat (Jamarat Bridge)",
+      "image": "/images/al-jamarat/aljamarat1.webp",
+      "shortDescription": "The holiest site in Islam located in Masjid al-Haram.",
+      "fullDescription": "Te ritual of Rami commemorates Prophet Ibrahim's test of faith when he was commanded in a dream to sacrifice his son—Ismail or Ishaq, according to different narrations. On his way, Shaytan tried to divert him three times: at Jamarah al-Aqaba, al-Wusta, and al-Ula. Each time, Ibrahim, guided by the angel Jibril, threw seven stones at Shaytan, driving him away. His firm resistance symbolized complete trust in Allah. Eventually, Allah replaced his son with a sacrificial animal, honoring Ibrahim’s obedience.",
+      "heroImage": "/images/al-jamarat/aljamarat1.webp",
+      "gallery": [
+        "/images/al-jamarat/aljamarat2.jpeg",
+        "/images/al-jamarat/aljamarat3.jpeg",
+        "/images/al-jamarat/aljamarat4.jpeg",
+        "/images/al-jamarat/aljamarat5.jpeg"
+      ]
+    }
+  ]
+  

@@ -5,7 +5,7 @@ import { HeroSection } from '../components/PageComponent';
 
 const hajjSteps = [
   {
-    title: "🕋 1. Ihram & Niyyah (Intention)",
+    title: "Ihram & Niyyah (Intention)",
     image: "/images/umrah/IhramNiyyah.webp",
     content: [
       "At the Miqat, wear Ihram garments and make the intention for Hajj by saying: Labbayk Allahumma Hajjan",
@@ -13,7 +13,7 @@ const hajjSteps = [
     ]
   },
   {
-    title: "🕋 2. Tawaf al-Qudum (Arrival Tawaf)",
+    title: "Tawaf al-Qudum (Arrival Tawaf)",
     image: "/images/umrah/tawaf.webp",
     content: [
       "Upon arriving in Makkah, perform Tawaf around the Kaaba.",
@@ -22,7 +22,7 @@ const hajjSteps = [
     ]
   },
   {
-    title: "🏕️ 3. 8th Dhul Hijjah – Day of Tarwiyah (Mina)",
+    title: "8th Dhul Hijjah – Day of Tarwiyah (Mina)",
     image: "/images/hajj/minaa.png",
     content: [
       "Re-enter Ihram and proceed to Mina.",
@@ -30,7 +30,7 @@ const hajjSteps = [
     ]
   },
   {
-    title: "🏞️ 4. 9th Dhul Hijjah – Day of Arafah",
+    title: "9th Dhul Hijjah – Day of Arafah",
     image: "/images/hajj/arafat.jpg",
     content: [
       "After Fajr, go to Mount Arafat.",
@@ -40,7 +40,7 @@ const hajjSteps = [
     ]
   },
   {
-    title: "🌙 5. 9th Dhul Hijjah (Evening) – Muzdalifah",
+    title: "9th Dhul Hijjah (Evening) – Muzdalifah",
     image: "/images/hajj/muzda.jpg",
     content: [
       "After sunset, travel to Muzdalifah.",
@@ -50,7 +50,7 @@ const hajjSteps = [
     ]
   },
   {
-    title: "🪨 6. 10th Dhul Hijjah – Eid al-Adha: Jamarat, Sacrifice, Haircut",
+    title: "10th Dhul Hijjah – Eid al-Adha: Jamarat, Sacrifice, Haircut",
     image: "/images/hajj/day10.png",
     content: [
       "Go to Jamarat al-Aqaba and throw 7 stones at the largest pillar.",
@@ -61,7 +61,7 @@ const hajjSteps = [
     ]
   },
   {
-    title: "🕋 7. Tawaf al-Ifadah (Main Tawaf)",
+    title: "Tawaf al-Ifadah (Main Tawaf)",
     image: "/images/hajj/tawaaf.png",
     content: [
       "Return to Makkah and perform this Tawaf, a major part of Hajj.",
@@ -70,7 +70,7 @@ const hajjSteps = [
     ]
   },
   {
-    title: "🏕️ 8. 11th & 12th Dhul Hijjah – Days of Tashreeq (Mina)",
+    title: "11th & 12th Dhul Hijjah – Days of Tashreeq (Mina)",
     image: "/images/hajj/stoning.png",
     content: [
       "Stay in Mina.",
@@ -79,7 +79,7 @@ const hajjSteps = [
     ]
   },
   {
-    title: "🕋 9. Farewell Tawaf (Tawaf al-Wida)",
+    title: "Farewell Tawaf (Tawaf al-Wida)",
     image: "/images/hajj/dua.png",
     content: [
       "Before leaving Makkah, perform the Farewell Tawaf.",
@@ -207,12 +207,6 @@ const TimelineSection1 = () => {
     "Tawaf al-Ifadah (Main Tawaf)",
     "11th & 12th Dhul Hijjah – Days of Tashreeq (Mina)",
     "Farewell Tawaf (Tawaf al-Wida)",
-    "Enter Ihram & Travel to Mina",
-    "Stand at Arafat",
-    "Night in Muzdalifah",
-    "Stoning & Sacrifice",
-    "Tawaf & Sa’i",
-    "Final Days in Mina"
   ];
 
   return (

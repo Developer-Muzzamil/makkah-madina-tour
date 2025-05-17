@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React , { useRef, useState, useEffect} from "react";
+// import { motion } from "framer-motion";
 import { Card, HeroSection, PopupAd } from "../components/PageComponent";
 
 const HeroSections = () => {
@@ -15,38 +15,6 @@ const HeroSections = () => {
   );
 };
 
-//   return (
-//     <section className="py-12 px-4 md:px-12 bg-gray-50">
-//       <h2 className="text-3xl font-bold text-center mb-10">Explore Our Site</h2>
-//       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
-//         <Card
-//           image="/images/makkah/masjid_al_jharam-nightview2.jpg"
-//           title="Makkah"
-//           description="The sacred city of Makkah, home to the Kaaba and Masjid al-Haram."
-//           link="/makkah"
-//         />
-//         <Card
-//           image="/images/madina.jpeg"
-//           title="Madina"
-//           description="City of the Prophet (PBUH), home to Masjid al-Nabawi and rich Islamic history."
-//           link="/madina"
-//         />
-//         <Card
-//           image="/images/makkah/masjid_al_jharam-nightview2.jpg"
-//           title="Umrah"
-//           description="The sacred city of Makkah, home to the Kaaba and Masjid al-Haram."
-//           link="/makkah"
-//         />
-//         <Card
-//           image="/images/makkah/masjid_al_jharam-nightview2.jpg"
-//           title="Hajj"
-//           description="The sacred city of Makkah, home to the Kaaba and Masjid al-Haram."
-//           link="/makkah"
-//         />
-//       </div>
-//     </section>
-//   );
-// };
 
 const ExploreSection = () => {
   return (
@@ -90,95 +58,74 @@ const ExploreSection = () => {
   );
 };
 
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: (i) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.3, duration: 0.6, ease: "easeOut" },
-  }),
-};
-
-const HeartSoulSection = () => {
+// Animated fade-in container
+function AnimatedContainer({ children }) {
+  const ref = useRef();
+  const isVisible = useIsVisible(ref);
   return (
-    <section className="bg-gradient-to-br from-white to-gray-100 py-16 px-4">
-      <motion.div
-        className="max-w-5xl mx-auto text-center"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-      >
-        <motion.h2 className="text-4xl font-bold text-gray-800 mb-6">
-          Makkah & Madina — The Heart and Soul of Islam
-        </motion.h2>
+    <div
+      ref={ref}
+      className={`transform transition-all duration-700 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+      }`}
+    >
+      {children}
+    </div>
+  );
+}
 
-        <motion.p
-          className="text-lg text-gray-600 max-w-3xl mx-auto mb-12"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-        >
-          If <span className="font-semibold text-gray-800">Makkah</span> is the{" "}
-          <span className="italic text-red-600">Heart</span> of Islam, where the
-          message began, then{" "}
-          <span className="font-semibold text-gray-800">Madina</span> is the{" "}
-          <span className="italic text-green-600">Soul</span>, where it blossomed with peace, love, and unity.
-        </motion.p>
+// Scroll-triggered visibility hook
+function useIsVisible(ref) {
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, [ref]);
+  return isVisible;
+}
 
-        <div className="flex flex-col md:flex-row justify-center items-center gap-10">
-          {[
-            {
-              title: "Makkah – The Heart",
-              items: [
-                "✨ Birthplace of Prophet Muhammad (PBUH)",
-                "📖 Where the first revelation was received",
-                "🏛️ Home of the Kaaba – Qibla for all Muslims",
-                "🕋 Center of Hajj and Tawheed",
-              ],
-            },
-            {
-              title: "Madina – The Soul",
-              items: [
-                "🌇 City of the Prophet’s Hijrah (migration)",
-                "🕌 Home of Masjid an-Nabawi",
-                "❤️ Symbol of peace, mercy, and unity",
-                "🌹 Final resting place of Prophet Muhammad (PBUH)",
-              ],
-            },
-          ].map((card, index) => (
-            <motion.div
-              key={card.title}
-              className="bg-white rounded-2xl shadow p-6 border border-gray-200 w-full max-w-md text-left cursor-pointer"
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              whileHover={{
-                scale: 1.05,
-                y: -8,
-                boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
-              }}
-              viewport={{ once: true }}
-              custom={index}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <h3 className="text-2xl font-semibold text-gray-700 mb-4">
-                {card.title}
-              </h3>
-              <ul className="text-gray-600 space-y-2 text-sm">
-                {card.items.map((item, i) => (
-                  <li key={i}>{item}</li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
+// Testimonials component
+function TestimonialsSection() {
+  const testimonials = [
+    {
+      name: "Dr. Sara Zubia",
+      quote:
+        "Thank you, Dr Mohamed, Um Ibrahim and Ibrahim, for all your efforts throughout our Hajj. We had a wonderful experience alhamdu lil Illah. We genuinely felt we were travelling with our family. We could not ask for more.",
+    },
+    {
+      name: "Mustafa Abass",
+      quote:
+        "London group arrived safely alhamdulillah. Jazakallah Mohammed ben Othman and everyone else… had a hajj mabroor and return home safely, start a new beautiful life with baraka from Allah swt.",
+    },
+    {
+      name: "Zakariya Aways",
+      quote:
+        "Guys, it was a pleasure meeting you all and blessed to have done Hajj at a young age… Truly a great experience for me.",
+    },
+  ];
+
+  return (
+    <section className="py-16">
+      <h2 className="text-3xl font-bold mb-8 text-center">Testimonials</h2>
+      <div className="space-y-8 max-w-3xl mx-auto">
+        {testimonials.map((t, i) => (
+          <AnimatedContainer key={i}>
+            <blockquote className="bg-white p-6 border-l-4 border-primary">
+              <p className="italic">“{t.quote}”</p>
+              <footer className="mt-2 text-right font-semibold">
+                – {t.name}
+              </footer>
+            </blockquote>
+          </AnimatedContainer>
+        ))}
+      </div>
     </section>
   );
-};
+}
 
 export const HomePage = () => {
   return (
@@ -186,7 +133,7 @@ export const HomePage = () => {
       <PopupAd />
       <HeroSections />
       <ExploreSection />
-      <HeartSoulSection />
+      <TestimonialsSection/>
     </div>
   );
 };
