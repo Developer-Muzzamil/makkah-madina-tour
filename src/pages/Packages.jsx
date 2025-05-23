@@ -136,61 +136,69 @@ const Packages = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f8fafc] to-[#f3f7f4]">
       <img 
-      src="/images/DarkLogocUT.PNG" 
-      alt="Company Logo"
-      className="mt-10 mx-auto border rounded-2xl h-60" />
+        src="/images/DarkLogocUT.PNG" 
+        alt="Company Logo"
+        className="mt-10 mx-auto border rounded-2xl h-30 md:h-30 w-auto max-w-xs md:max-w-md" // Responsive logo
+      />
+
       {/* Umrah Section */}
       <motion.section
-        className={`${glassBg} w-full max-w-6xl  mx-auto px-4 md:px-10 pt-10 pb-20 mt-12 rounded-3xl`}
+        className={`${glassBg} w-full max-w-6xl mx-auto px-2 sm:px-4 md:px-10 pt-6 md:pt-10 pb-10 md:pb-20 mt-8 md:mt-12 rounded-2xl md:rounded-3xl`}
         variants={fadeInSection}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
       >
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-3 tracking-tight drop-shadow-lg">
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-2 md:mb-3 tracking-tight drop-shadow-lg">
             Umrah Packages
           </h2>
           <div className="flex justify-center mb-2">
-            <span className="inline-block w-24 h-2 rounded-full bg-gradient-to-r from-yellow-300 via-[#168c5f] to-yellow-300" />
+            <span className="inline-block w-20 md:w-24 h-2 rounded-full bg-gradient-to-r from-yellow-300 via-[#168c5f] to-yellow-300" />
           </div>
-          <p className="text-lg md:text-xl text-gray-700 font-medium max-w-2xl mx-auto">
+          <p className="text-base md:text-xl text-gray-700 font-medium max-w-xs sm:max-w-lg md:max-w-2xl mx-auto">
             Select a package for your sacred journey—budget, comfort, or luxury, we have you covered.
           </p>
         </div>
-        <CardE title="" places={umrahPackages} />
+        {/* Responsive Card Grid */}
+        <div className="w-full">
+          <CardE title="" places={umrahPackages} />
+        </div>
       </motion.section>
 
       {/* Divider */}
       <motion.div
-        className="w-full flex justify-center my-12"
+        className="w-full flex justify-center my-6 md:my-12"
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
       >
-        <span className="block w-40 h-2 bg-gradient-to-r from-yellow-300 via-[#168c5f] to-yellow-300 rounded-full opacity-80"></span>
+        <span className="block w-28 md:w-40 h-2 bg-gradient-to-r from-yellow-300 via-[#168c5f] to-yellow-300 rounded-full opacity-80"></span>
       </motion.div>
 
       {/* Hajj Section */}
       <motion.section
-        className={`${glassBg} w-full max-w-6xl mx-auto pt-10 px-4 md:px-10 pb-20 rounded-3xl`}
+        className={`${glassBg} w-full max-w-6xl mx-auto pt-6 md:pt-10 px-2 sm:px-4 md:px-10 pb-10 md:pb-20 rounded-2xl md:rounded-3xl`}
         variants={fadeInSection}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
       >
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-3 tracking-tight drop-shadow-lg">
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-2 md:mb-3 tracking-tight drop-shadow-lg">
             Hajj Packages
           </h2>
           <div className="flex justify-center mb-2">
-            <span className="inline-block w-24 h-2 rounded-full bg-gradient-to-r from-yellow-300 via-[#168c5f] to-yellow-300" />
+            <span className="inline-block w-20 md:w-24 h-2 rounded-full bg-gradient-to-r from-yellow-300 via-[#168c5f] to-yellow-300" />
           </div>
-          <p className="text-lg md:text-xl text-gray-700 font-medium max-w-2xl mx-auto">
+          <p className="text-base md:text-xl text-gray-700 font-medium max-w-xs sm:max-w-lg md:max-w-2xl mx-auto">
             From essential to VIP, explore Hajj options designed to make your pilgrimage smooth and memorable.
           </p>
         </div>
-        <CardE title="" places={hajjPackages} />
+        {/* Responsive Card Grid */}
+        <div className="w-full">
+          <CardE title="" places={hajjPackages} />
+        </div>
       </motion.section>
     </div>
   );

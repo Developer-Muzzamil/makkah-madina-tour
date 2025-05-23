@@ -275,7 +275,7 @@ export const CardE = ({ title, places = [] }) => {
 
   const expandedPlace = expandedIndex !== null ? places[expandedIndex] : null;
 
-  // Animation configs with more delay for extra smoothness
+  // Animation configs
   const backdropVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -283,16 +283,6 @@ export const CardE = ({ title, places = [] }) => {
       transition: { duration: 0.7, delay: 0.07, ease: [0.4, 0, 0.2, 1] }
     },
     exit: { opacity: 0, transition: { duration: 0.45, ease: [0.4, 0, 0.2, 1] } }
-  };
-
-  const modalParentVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        delayChildren: 0.33, // increased delay for child entrance
-        staggerChildren: 0.14
-      }
-    }
   };
 
   const modalCardVariants = {
@@ -318,6 +308,7 @@ export const CardE = ({ title, places = [] }) => {
 
   const gradientBg = "bg-gradient-to-br from-[#f8fafc] via-[#f9efe3] to-[#e9f8f5]";
 
+  // Modal, with only modal scroll on mobile, columns scrollable only on md+
   const Modal = ({ children, onClose }) =>
     ReactDOM.createPortal(
       <AnimatePresence>
@@ -331,20 +322,18 @@ export const CardE = ({ title, places = [] }) => {
           onClick={onClose}
         >
           <motion.div
-            className={`${gradientBg} relative w-full max-w-3xl md:max-w-4xl max-h-[90vh] my-8 rounded-3xl shadow-2xl flex flex-col md:flex-row border border-yellow-50`}
+            className={`${gradientBg} relative w-full max-w-3xl md:max-w-4xl max-h-[90vh] my-8 rounded-3xl shadow-2xl flex flex-col md:flex-row border border-yellow-50 overflow-y-auto`}
             initial="hidden"
             animate="visible"
             exit="exit"
             variants={modalCardVariants}
             onClick={e => e.stopPropagation()}
+            style={{
+              maxHeight: "90vh",
+              overflowY: "auto"
+            }}
           >
-            <motion.div
-              className="flex w-full md:flex-row flex-col"
-              variants={modalParentVariants}
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-            >
+            <motion.div className="flex w-full md:flex-row flex-col">
               {children}
             </motion.div>
           </motion.div>
@@ -389,7 +378,7 @@ export const CardE = ({ title, places = [] }) => {
           <Modal onClose={() => setExpandedIndex(null)}>
             {/* Left Column: Package Details */}
             <motion.div
-              className="md:w-2/3 w-full text-left p-8 md:p-10 md:pr-0 overflow-auto flex flex-col justify-center"
+              className="md:w-2/3 w-full text-left p-8 md:p-10 md:pr-0 flex flex-col justify-center md:overflow-y-auto md:max-h-[85vh]"
               variants={columnVariants}
             >
               <motion.h3
@@ -469,7 +458,7 @@ export const CardE = ({ title, places = [] }) => {
             </motion.div>
             {/* Right Column: Enquiry Form */}
             <motion.div
-              className="md:w-1/3 w-full bg-white/80 p-8 rounded-r-3xl shadow-inner flex flex-col justify-start border-l border-yellow-50"
+              className="md:w-1/3 w-full bg-white/80 p-8 rounded-r-3xl shadow-inner flex flex-col justify-start border-l border-yellow-50 md:overflow-y-auto md:max-h-[85vh]"
               variants={columnVariants}
             >
               <EnquiryForm packageId={expandedPlace.id || expandedPlace.packageId || `umrah-${expandedIndex}`} />
@@ -941,7 +930,12 @@ export const EnquiryForm = ({ packageId }) => {
       transition={{ duration: 0.65, ease: [0.4, 0, 0.2, 1] }}
       className="w-full"
     >
-      <div className="relative bg-white/80 backdrop-blur-md border border-yellow-100 rounded-2xl shadow-xl px-5 py-6 md:px-7">
+      {/* KEY: max-h-[90vh] overflow-y-auto and responsive width */}
+      <div className="relative bg-white/80 backdrop-blur-md border border-yellow-100 rounded-2xl shadow-xl
+        px-2 py-4 xs:px-3 sm:px-4 md:px-7 md:py-6
+        w-full max-w-md mx-auto
+        max-h-[90vh] overflow-y-auto"
+      >
         <AnimatePresence>
           {submitted ? (
             <motion.div
@@ -1079,7 +1073,6 @@ export const EnquiryForm = ({ packageId }) => {
     </motion.div>
   );
 };
-
 
 
 

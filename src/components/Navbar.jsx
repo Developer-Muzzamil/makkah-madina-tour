@@ -33,7 +33,7 @@ const Navbar = () => {
 
         {/* Center: Nav Links (absolute center) */}
         <div className="absolute left-1/2 transform -translate-x-1/2 hidden md:flex gap-10 text-white font-medium">
-          {["Home", "Makkah", "Madina", "Hajj", "Umrah", "Packages","About"].map((link) => (
+          {["Home", "Makkah", "Madina", "Hajj", "Umrah", "Services", "About"].map((link) => (
             <NavLink
               key={link}
               to={`/${link.toLowerCase()}`}
@@ -74,7 +74,7 @@ const Navbar = () => {
             transition={{ type: "spring", damping: 20, stiffness: 200 }}
           >
             <ul className="flex flex-col gap-4 text-white font-medium">
-              {["Home", "Makkah", "Madina", "Hajj", "Umrah","Packages", "About"].map((link) => (
+              {["Home", "Makkah", "Madina", "Hajj", "Umrah", "Services", "About"].map((link) => (
                 <li key={link}>
                   <NavLink
                     to={`/${link.toLowerCase()}`}
