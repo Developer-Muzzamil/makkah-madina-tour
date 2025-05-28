@@ -177,25 +177,19 @@ const UmrahStepSlider = ({ umrahSteps, autoPlayInterval = 5000 }) => {
     setCurrentStep((prev) => (prev - 1 + umrahSteps.length) % umrahSteps.length);
   };
 
-  // Autoplay
   useEffect(() => {
     const interval = setInterval(nextStep, autoPlayInterval);
     return () => clearInterval(interval);
-  }, [umrahSteps.length, autoPlayInterval]);
+  }, [autoPlayInterval]);
 
   return (
     <div className="flex flex-col items-center justify-center px-4 sm:px-6 md:px-10 py-8 w-full bg-white">
-      {/* Heading above the slider */}
       <h1 className="text-3xl font-extrabold text-gray-800 mb-6">
         Steps to Perform Umrah
       </h1>
 
       <div className="relative w-full max-w-4xl">
-        {/* Slider container */}
-        <div
-          ref={sliderRef}
-          className="h-[520px] overflow-hidden rounded-2xl shadow-xl bg-white"
-        >
+        <div ref={sliderRef} className="h-[520px] overflow-hidden rounded-2xl shadow-xl bg-white">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentStep}
@@ -212,7 +206,6 @@ const UmrahStepSlider = ({ umrahSteps, autoPlayInterval = 5000 }) => {
               }}
               className="w-full h-full flex flex-col items-center justify-start px-6 pt-6 pb-4 cursor-grab"
             >
-              {/* Step indicator */}
               <div className="w-full flex justify-start mb-2">
                 <div className="bg-amber-200 text-amber-900 text-sm font-semibold px-3 py-1 rounded-full shadow">
                   Step {currentStep + 1}
@@ -222,64 +215,57 @@ const UmrahStepSlider = ({ umrahSteps, autoPlayInterval = 5000 }) => {
               <img
                 src={umrahSteps[currentStep].image}
                 alt={umrahSteps[currentStep].title}
-                className="w-full h-100 object-cover rounded-lg mb-5 bg-white shadow-md"
+                className="w-full h-[260px] object-cover rounded-lg mb-4 bg-white shadow-md"
               />
 
               <h2 className="text-2xl font-bold mb-2 text-center text-gray-800">
                 {umrahSteps[currentStep].title}
               </h2>
 
-              <ul className="text-gray-700 text-lg list-disc list-inside space-y-1 text-left max-w-xl">
-                {umrahSteps[currentStep].content.map((point, idx) => (
-                  <li key={idx}>{point}</li>
+              <ul className="list-disc text-gray-600 text-base space-y-1 px-4">
+                {umrahSteps[currentStep].content.map((line, i) => (
+                  <li key={i}>{line}</li>
                 ))}
               </ul>
             </motion.div>
           </AnimatePresence>
         </div>
 
-        {/* External arrows positioned outside container with increased offset */}
-        <div
-          onClick={prevStep}
-          className={`absolute left-[-48px] top-1/2 transform -translate-y-1/2 bg-amber-100 p-2 rounded-full shadow cursor-pointer transition-opacity
-            ${umrahSteps.length <= 1 ? 'opacity-50 pointer-events-none' : 'hover:bg-amber-200'}`
-        }
-        >
-          <ChevronLeft className="w-6 h-6 text-amber-900" />
+        {/* Navigation Buttons */}
+        <div className="absolute top-1/2 left-0 transform -translate-y-1/2">
+          <button
+            onClick={prevStep}
+            className="p-2 rounded-full bg-white shadow hover:bg-amber-200 transition"
+          >
+            <ChevronLeft className="w-5 h-5 text-gray-800" />
+          </button>
         </div>
-        <div
-          onClick={nextStep}
-          className={`absolute right-[-48px] top-1/2 transform -translate-y-1/2 bg-amber-100 p-2 rounded-full shadow cursor-pointer transition-opacity
-            ${umrahSteps.length <= 1 ? 'opacity-50 pointer-events-none' : 'hover:bg-amber-200'}`
-        }
-        >
-          <ChevronRight className="w-6 h-6 text-amber-900" />
+        <div className="absolute top-1/2 right-0 transform -translate-y-1/2">
+          <button
+            onClick={nextStep}
+            className="p-2 rounded-full bg-white shadow hover:bg-amber-200 transition"
+          >
+            <ChevronRight className="w-5 h-5 text-gray-800" />
+          </button>
         </div>
       </div>
 
-      {/* Thumbnail Navigation */}
-      <div className="flex overflow-x-auto w-full max-w-5xl mt-6 space-x-4 px-4 pb-2">
-        {umrahSteps.map((step, index) => (
-          <motion.div
-            key={index}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setCurrentStep(index)}
-            className={`cursor-pointer flex-shrink-0 w-24 h-24 rounded-xl overflow-hidden border-4 transition-all duration-300
-              ${currentStep === index ? 'border-amber-300 shadow-lg' : 'border-transparent hover:border-amber-100'}`
-            }
-          >
-            <img
-              src={step.image}
-              alt={step.title}
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
+      {/* Optional Step indicators */}
+      <div className="flex gap-2 mt-6">
+        {umrahSteps.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setCurrentStep(idx)}
+            className={`w-3 h-3 rounded-full ${
+              idx === currentStep ? "bg-amber-600" : "bg-gray-300"
+            }`}
+          ></button>
         ))}
       </div>
     </div>
   );
 };
+
 
 
 

@@ -1084,7 +1084,7 @@ export function PopupAd() {
     // Only show once per page load (not per session)
     const timer = setTimeout(() => {
       setShow(true);
-    }, 6000); // 6 seconds delay
+    }, 70000); // 70 seconds delay
 
     return () => clearTimeout(timer);
   }, []);
@@ -1131,10 +1131,10 @@ export function PopupAd() {
                 Umrah packages. Limited time only!
               </p>
               <a
-                href="/packages"
+                href="/services"
                 className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-full font-semibold text-lg shadow hover:scale-105 transition-transform duration-300 inline-block"
               >
-                View Packages
+                Explore Our Services 
               </a>
             </div>
           </motion.div>
