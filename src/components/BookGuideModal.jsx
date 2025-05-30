@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaTimes } from "react-icons/fa";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
@@ -110,9 +109,9 @@ const BookGuideModal = ({ guide, onClose }) => {
           transition={{ duration: 0.3 }}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Close */}
+          {/* Close - Consistent SVG as other modals */}
           <button
-            className="absolute top-5 right-5 w-7 h-7 flex items-center justify-center rounded-full bg-[#f5f7fa] hover:bg-[#fff9e5] transition"
+            className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-full bg-[#f5f7fa] hover:bg-[#fff9e5] transition z-30"
             style={{
               border: `1.5px solid ${GOLD_BORDER}`,
               color: GOLD,
@@ -122,7 +121,21 @@ const BookGuideModal = ({ guide, onClose }) => {
             aria-label="Close booking modal"
             type="button"
           >
-            <FaTimes size={22} />
+            <svg
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              fill="none"
+              stroke={GOLD}
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ display: "block" }}
+            >
+              <circle cx="12" cy="12" r="10" stroke={GOLD} fill="#f5f7fa" />
+              <line x1="15" y1="9" x2="9" y2="15" />
+              <line x1="9" y1="9" x2="15" y2="15" />
+            </svg>
           </button>
           <h2
             className="text-2xl font-extrabold mb-2 text-center tracking-tight mt-10"

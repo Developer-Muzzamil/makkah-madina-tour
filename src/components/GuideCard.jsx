@@ -214,12 +214,13 @@ export const ResponsiveIDCardGuideCard = ({ guide, onBookNow }) => {
     };
   }, [showModal]);
 
+  // Patch: Use guideData.availability for the 2nd pill (right-side top)
   const pillData = [
     guideData.location
       ? { content: toCamelCase(guideData.location), color: "gold" }
       : null,
-    guideData.workType
-      ? { content: toCamelCase(guideData.workType), color: "green" }
+    guideData.availability
+      ? { content: toCamelCase(guideData.availability), color: "green" }
       : null,
   ].filter(Boolean);
 
@@ -527,11 +528,11 @@ export const ResponsiveIDCardGuideCard = ({ guide, onBookNow }) => {
                   />
                 </div>
                 <div>
-                                  {guideData.about && (
-                  <p className="text-[#202940] leading-relaxed mb-4 text-[0.98rem]">
-                    {guideData.about}
-                  </p>
-                )}
+                  {guideData.about && (
+                    <p className="text-[#202940] leading-relaxed mb-4 text-[0.98rem]">
+                      {guideData.about}
+                    </p>
+                  )}
                 </div>
                 {/* Certifications */}
                 {guideData.certifications.length > 0 && (
