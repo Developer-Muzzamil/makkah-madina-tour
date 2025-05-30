@@ -1,11 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaTimesCircle } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
+// Theme colors from your card theme
+const GOLD = "#ffb400";
+const GOLD_BORDER = "#ffe680";
+const GREEN = "#279c10";
+const GREEN_BG = "#d6f5e7";
+const DARK = "#0d2235";
+const LIGHT_BG = "#f5f7fa";
+const ICON_COLOR = "#279c10";
+
 const API_BASE = import.meta.env.VITE_API_URL ?? "";
 
+// Validation schema (unchanged)
 const bookingSchema = Yup.object({
   name: Yup.string().required("Name is required"),
   phone: Yup.string()
@@ -82,14 +92,18 @@ const BookGuideModal = ({ guide, onClose }) => {
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 z-[2100] flex items-center justify-center min-h-screen bg-[rgba(20,24,34,0.68)] backdrop-blur-lg"
+        className="fixed inset-0 z-[2100] flex items-center justify-center min-h-screen bg-black/80 backdrop-blur-lg"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
       >
         <motion.div
-          className="relative w-full max-w-lg mx-2 bg-white/95 rounded-3xl shadow-2xl border border-yellow-100 p-8"
+          className="relative w-full max-w-lg mx-2 bg-white rounded-3xl shadow-2xl border border-[rgba(255,180,0,0.14)] p-8"
+          style={{
+            background: "linear-gradient(120deg,#fff9e5 0%,#fafbfc 100%)",
+            boxShadow: "0 8px 32px 0 rgba(255,180,0,0.12)",
+          }}
           initial={{ scale: 0.97, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.95, opacity: 0 }}
@@ -98,17 +112,28 @@ const BookGuideModal = ({ guide, onClose }) => {
         >
           {/* Close */}
           <button
-            className="absolute top-5 right-5 text-gray-500 hover:text-red-600 text-2xl"
+            className="absolute top-5 right-5 w-7 h-7 flex items-center justify-center rounded-full bg-[#f5f7fa] hover:bg-[#fff9e5] transition"
+            style={{
+              border: `1.5px solid ${GOLD_BORDER}`,
+              color: GOLD,
+              boxShadow: "0 2px 8px 0 rgba(255,180,0,0.09)",
+            }}
             onClick={onClose}
             aria-label="Close booking modal"
             type="button"
           >
-            <FaTimesCircle />
+            <FaTimes size={22} />
           </button>
-          <h2 className="text-2xl font-extrabold text-yellow-700 mb-2 text-center">
-            Book {guide.name}
+          <h2
+            className="text-2xl font-extrabold mb-2 text-center tracking-tight mt-10"
+            style={{
+              color: DARK,
+              letterSpacing: "0.01em",
+            }}
+          >
+            {/* Book {guide.name} */}
           </h2>
-          <div className="text-center text-gray-600 mb-4">
+          <div className="text-center mb-4" style={{ color: "#ad7a00" }}>
             For queries or a callback, fill out the form below and our team will reach out!
           </div>
           {!success ? (
@@ -118,14 +143,15 @@ const BookGuideModal = ({ guide, onClose }) => {
               validationSchema={bookingSchema}
               onSubmit={handleSubmit}
             >
-              {({ isSubmitting, resetForm }) => (
+              {({ isSubmitting }) => (
                 <Form className="space-y-5" autoComplete="off">
+                  {/* Name */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1" htmlFor="name">
+                    <label className="block text-sm font-semibold mb-1" htmlFor="name" style={{ color: DARK }}>
                       Your Name <span className="text-red-500">*</span>
                     </label>
                     <Field
-                      className="w-full rounded-lg border px-3 py-2 bg-white/80 focus:outline-none focus:ring-2 focus:ring-yellow-200 text-gray-900"
+                      className="w-full rounded-lg border border-[#ffe680] px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-[#ffb400] text-[#0d2235] font-semibold"
                       id="name"
                       name="name"
                       required
@@ -133,12 +159,13 @@ const BookGuideModal = ({ guide, onClose }) => {
                     />
                     <ErrorMessage name="name" component="div" className="text-xs text-red-500 mt-0.5" />
                   </div>
+                  {/* Phone */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1" htmlFor="phone">
+                    <label className="block text-sm font-semibold mb-1" htmlFor="phone" style={{ color: DARK }}>
                       Phone <span className="text-red-500">*</span>
                     </label>
                     <Field
-                      className="w-full rounded-lg border px-3 py-2 bg-white/80 focus:outline-none focus:ring-2 focus:ring-yellow-200 text-gray-900"
+                      className="w-full rounded-lg border border-[#ffe680] px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-[#ffb400] text-[#0d2235] font-semibold"
                       id="phone"
                       name="phone"
                       type="tel"
@@ -147,12 +174,13 @@ const BookGuideModal = ({ guide, onClose }) => {
                     />
                     <ErrorMessage name="phone" component="div" className="text-xs text-red-500 mt-0.5" />
                   </div>
+                  {/* Email */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1" htmlFor="email">
+                    <label className="block text-sm font-semibold mb-1" htmlFor="email" style={{ color: DARK }}>
                       Email <span className="text-red-500">*</span>
                     </label>
                     <Field
-                      className="w-full rounded-lg border px-3 py-2 bg-white/80 focus:outline-none focus:ring-2 focus:ring-yellow-200 text-gray-900"
+                      className="w-full rounded-lg border border-[#ffe680] px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-[#ffb400] text-[#0d2235] font-semibold"
                       id="email"
                       name="email"
                       type="email"
@@ -161,13 +189,14 @@ const BookGuideModal = ({ guide, onClose }) => {
                     />
                     <ErrorMessage name="email" component="div" className="text-xs text-red-500 mt-0.5" />
                   </div>
+                  {/* Dates */}
                   <div className="flex flex-col md:flex-row gap-4">
                     <div className="flex-1">
-                      <label className="block text-sm font-semibold text-gray-700 mb-1" htmlFor="dateFrom">
+                      <label className="block text-sm font-semibold mb-1" htmlFor="dateFrom" style={{ color: DARK }}>
                         Date From <span className="text-red-500">*</span>
                       </label>
                       <Field
-                        className="w-full rounded-lg border px-3 py-2 bg-white/80 focus:outline-none focus:ring-2 focus:ring-yellow-200 text-gray-900"
+                        className="w-full rounded-lg border border-[#ffe680] px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-[#ffb400] text-[#0d2235] font-semibold"
                         id="dateFrom"
                         name="dateFrom"
                         type="date"
@@ -177,11 +206,11 @@ const BookGuideModal = ({ guide, onClose }) => {
                       <ErrorMessage name="dateFrom" component="div" className="text-xs text-red-500 mt-0.5" />
                     </div>
                     <div className="flex-1">
-                      <label className="block text-sm font-semibold text-gray-700 mb-1" htmlFor="dateTo">
+                      <label className="block text-sm font-semibold mb-1" htmlFor="dateTo" style={{ color: DARK }}>
                         Date To <span className="text-red-500">*</span>
                       </label>
                       <Field
-                        className="w-full rounded-lg border px-3 py-2 bg-white/80 focus:outline-none focus:ring-2 focus:ring-yellow-200 text-gray-900"
+                        className="w-full rounded-lg border border-[#ffe680] px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-[#ffb400] text-[#0d2235] font-semibold"
                         id="dateTo"
                         name="dateTo"
                         type="date"
@@ -191,13 +220,14 @@ const BookGuideModal = ({ guide, onClose }) => {
                       <ErrorMessage name="dateTo" component="div" className="text-xs text-red-500 mt-0.5" />
                     </div>
                   </div>
+                  {/* Times */}
                   <div className="flex flex-col md:flex-row gap-4">
                     <div className="flex-1">
-                      <label className="block text-sm font-semibold text-gray-700 mb-1" htmlFor="timeFrom">
+                      <label className="block text-sm font-semibold mb-1" htmlFor="timeFrom" style={{ color: DARK }}>
                         Time From <span className="text-red-500">*</span>
                       </label>
                       <Field
-                        className="w-full rounded-lg border px-3 py-2 bg-white/80 focus:outline-none focus:ring-2 focus:ring-yellow-200 text-gray-900"
+                        className="w-full rounded-lg border border-[#ffe680] px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-[#ffb400] text-[#0d2235] font-semibold"
                         id="timeFrom"
                         name="timeFrom"
                         type="time"
@@ -207,11 +237,11 @@ const BookGuideModal = ({ guide, onClose }) => {
                       <ErrorMessage name="timeFrom" component="div" className="text-xs text-red-500 mt-0.5" />
                     </div>
                     <div className="flex-1">
-                      <label className="block text-sm font-semibold text-gray-700 mb-1" htmlFor="timeTo">
+                      <label className="block text-sm font-semibold mb-1" htmlFor="timeTo" style={{ color: DARK }}>
                         Time To <span className="text-red-500">*</span>
                       </label>
                       <Field
-                        className="w-full rounded-lg border px-3 py-2 bg-white/80 focus:outline-none focus:ring-2 focus:ring-yellow-200 text-gray-900"
+                        className="w-full rounded-lg border border-[#ffe680] px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-[#ffb400] text-[#0d2235] font-semibold"
                         id="timeTo"
                         name="timeTo"
                         type="time"
@@ -221,13 +251,14 @@ const BookGuideModal = ({ guide, onClose }) => {
                       <ErrorMessage name="timeTo" component="div" className="text-xs text-red-500 mt-0.5" />
                     </div>
                   </div>
+                  {/* Message */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1" htmlFor="message">
+                    <label className="block text-sm font-semibold mb-1" htmlFor="message" style={{ color: DARK }}>
                       Message (optional)
                     </label>
                     <Field
                       as="textarea"
-                      className="w-full rounded-lg border px-3 py-2 bg-white/80 focus:outline-none focus:ring-2 focus:ring-yellow-200 text-gray-900"
+                      className="w-full rounded-lg border border-[#ffe680] px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-[#ffb400] text-[#0d2235] font-semibold"
                       id="message"
                       name="message"
                       rows={3}
@@ -236,13 +267,14 @@ const BookGuideModal = ({ guide, onClose }) => {
                     />
                     <ErrorMessage name="message" component="div" className="text-xs text-red-500 mt-0.5" />
                   </div>
+                  {/* Submit/Error Message */}
                   {submitMsg && (
                     <div className={`text-center text-sm ${success ? "text-green-600" : "text-red-500"}`}>{submitMsg}</div>
                   )}
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full py-2 px-4 rounded-lg font-bold text-white bg-gradient-to-r from-yellow-400 via-[#168c5f] to-yellow-400 shadow-lg transition-all ${
+                    className={`w-full py-2 px-4 rounded-xl font-bold text-white bg-gradient-to-r from-[#279c10] to-[#1bc768] shadow-lg transition-all ${
                       isSubmitting ? "opacity-60 pointer-events-none" : "hover:scale-105"
                     }`}
                   >
@@ -254,10 +286,12 @@ const BookGuideModal = ({ guide, onClose }) => {
           ) : (
             <div className="py-8 flex flex-col items-center">
               <span className="text-5xl mb-2">🎉</span>
-              <div className="text-xl font-bold text-emerald-700 mb-2">Thank you!</div>
-              <div className="text-gray-700 font-medium text-center mb-2">{submitMsg}</div>
+              <div className="text-xl font-bold" style={{ color: GREEN }}>
+                Thank you!
+              </div>
+              <div className="text-[#0d2235] font-medium text-center mb-2">{submitMsg}</div>
               <button
-                className="mt-4 px-4 py-2 bg-gradient-to-r from-yellow-300 via-[#168c5f] to-yellow-300 rounded-lg text-gray-900 font-semibold shadow hover:scale-105 transition"
+                className="mt-4 px-4 py-2 bg-gradient-to-r from-[#279c10] to-[#1bc768] rounded-xl text-white font-semibold shadow hover:scale-105 transition"
                 onClick={onClose}
               >
                 Close

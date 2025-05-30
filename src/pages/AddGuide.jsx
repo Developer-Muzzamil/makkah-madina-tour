@@ -375,7 +375,7 @@ export default function RegisterGuide() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full mt-4 bg-gradient-to-r from-[#E5B649] to-[#22996E] text-white font-bold py-3 rounded-xl shadow-md transition hover:shadow-lg hover:from-[#dab033] hover:to-[#1b7d54]"
+                className="mt-4 px-4 py-2 w-full bg-gradient-to-r from-[#279c10] to-[#1bc768] rounded-xl text-white font-semibold shadow hover:scale-105 transition"
               >
                 {isSubmitting ? 'Registering...' : 'Register as Guide'}
               </button>
