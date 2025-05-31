@@ -276,7 +276,7 @@ export const ResponsiveIDCardGuideCard = ({ guide, onBookNow }) => {
           rounded-2xl
           p-4
           w-full
-          min-w-[180]
+          min-w-[180px]
           min-h-[320px]
           flex flex-col items-center
           cursor-pointer
