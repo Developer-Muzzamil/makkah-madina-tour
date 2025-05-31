@@ -1,3 +1,5 @@
+// ResponsiveIDCardGuideCard.jsx
+
 import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -6,6 +8,7 @@ import {
 } from "react-icons/fa";
 import { MdVerified, MdWorkOutline } from "react-icons/md";
 
+// --- COLOR CONSTANTS ---
 const GOLD = "#ffb400";
 const GOLD_BORDER = "#ffe680";
 const GREEN_PILL = "#d6f5e7";
@@ -15,6 +18,7 @@ const LANG_PILL_TEXT = "#2185d0";
 const LANG_PILL_BORDER = "#c0e0ff";
 const ICON_COLOR = "#B9D4AA";
 
+// --- UTILS ---
 const toCamelCase = (str) =>
   str
     ? str
@@ -38,6 +42,7 @@ const formatCurrency = (amount, currency = "USD") => {
   }).format(amt);
 };
 
+// --- COMPONENTS ---
 const LanguagePill = ({ children }) => (
   <span
     className="px-2 py-[2px] text-[11px] font-semibold rounded-full mr-2"
@@ -164,6 +169,42 @@ const Field = ({
   );
 };
 
+// --- GUIDE DETAILS RIBBON COMPONENT ---
+const GuideDetailsRibbon = () => (
+  <div
+    className="w-full flex justify-center items-center"
+    style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      zIndex: 20,
+      width: "100%",
+      pointerEvents: "none",
+    }}
+  >
+    <div
+      className="flex items-center gap-2 px-7 py-1 shadow"
+      style={{
+        background: "linear-gradient(90deg,#fff9e5 0%,#fafbfc 100%)",
+        borderBottom: "2.5px solid #ffe680",
+        borderTopLeftRadius: "18px",
+        borderTopRightRadius: "18px",
+        marginTop: "-26px",
+        pointerEvents: "auto",
+        fontWeight: 700,
+        letterSpacing: "0.5px",
+        boxShadow: "0 4px 18px 0 rgba(255,180,0,0.10)",
+      }}
+    >
+      <FaIdCard size={20} style={{ color: ICON_COLOR }} />
+      <span className="text-base sm:text-lg font-bold text-[#0d2235] m-0 uppercase tracking-wide" style={{marginTop:2}}>
+        Guide Details :
+      </span>
+    </div>
+  </div>
+);
+
+// --- MAIN COMPONENT ---
 export const ResponsiveIDCardGuideCard = ({ guide, onBookNow }) => {
   const [showModal, setShowModal] = useState(false);
   const [imgError, setImgError] = useState(false);
@@ -228,7 +269,22 @@ export const ResponsiveIDCardGuideCard = ({ guide, onBookNow }) => {
     <>
       {/* Small Card */}
       <motion.div
-        className="relative bg-white border border-slate-200 rounded-2xl p-4 w-full min-w-[270px]  min-h-[320px] flex flex-col items-center cursor-pointer shadow-sm hover:shadow-lg transition group mx-auto"
+        className={`
+          relative
+          bg-white
+          border border-slate-200
+          rounded-2xl
+          p-4
+          w-full
+          min-w-[220px]
+          min-h-[320px]
+          flex flex-col items-center
+          cursor-pointer
+          shadow-sm hover:shadow-lg transition group mx-auto
+          sm:min-w-[270px]
+          max-w-xs
+          xs:max-w-[95vw]
+        `}
         style={{
           marginLeft: "auto",
           marginRight: "auto",
@@ -245,7 +301,7 @@ export const ResponsiveIDCardGuideCard = ({ guide, onBookNow }) => {
         transition={{ duration: 0.3 }}
       >
         {/* Pills */}
-        <div className="flex w-full justify-between mb-3 gap-1">
+        <div className="flex w-full justify-between mb-3 gap-1 flex-wrap">
           {pillData.map((p, i) => (
             <Pill key={i} color={p.color}>
               {p.content}
@@ -254,11 +310,11 @@ export const ResponsiveIDCardGuideCard = ({ guide, onBookNow }) => {
         </div>
         {/* Profile */}
         <div className="relative mb-3 flex flex-col items-center w-full">
-          <div className="mx-auto rounded-full border-2 border-[rgba(255,180,0,0.54)] bg-[#f5f7fa] w-[95px] h-[95px] flex items-center justify-center overflow-hidden shadow-sm">
+          <div className="mx-auto rounded-full border-2 border-[rgba(255,180,0,0.54)] bg-[#f5f7fa] w-[72px] h-[72px] sm:w-[95px] sm:h-[95px] flex items-center justify-center overflow-hidden shadow-sm">
             <img
               src={guideData.profileImg}
               alt={guideData.name}
-              className="w-[85px] h-[85px] object-cover rounded-full object-center bg-white"
+              className="w-[62px] h-[62px] sm:w-[85px] sm:h-[85px] object-cover rounded-full object-center bg-white"
               style={{ objectFit: "cover", objectPosition: "center" }}
               onError={() => setImgError(true)}
             />
@@ -273,7 +329,7 @@ export const ResponsiveIDCardGuideCard = ({ guide, onBookNow }) => {
         <div className="flex flex-col items-center w-full text-center mt-3">
           <div className="w-full flex flex-col items-center">
             <span
-              className="font-bold text-[#0d2235] text-base mb-0.5 break-words leading-tight"
+              className="font-bold text-[#0d2235] text-base sm:text-lg mb-0.5 break-words leading-tight"
               style={{
                 lineHeight: "1.1",
                 wordBreak: "break-word",
@@ -286,7 +342,7 @@ export const ResponsiveIDCardGuideCard = ({ guide, onBookNow }) => {
             </span>
           </div>
           <p
-            className="text-sm text-yellow-700 mt-1"
+            className="text-xs sm:text-sm text-yellow-700 mt-1"
             style={{ maxWidth: 240, whiteSpace: "normal" }}
           >
             {toCamelCase(guideData.specializations)}
@@ -305,7 +361,7 @@ export const ResponsiveIDCardGuideCard = ({ guide, onBookNow }) => {
           </div>
         )}
         {/* Footer stats */}
-        <div className="flex gap-2 items-center w-full justify-center mt-4 pt-1 border-t border-slate-100">
+        <div className="flex gap-2 items-center w-full justify-center mt-4 pt-1 border-t border-slate-100 flex-wrap">
           {guideData.charges && (
             <div className="flex items-center gap-2 text-sm font-bold">
               <span
@@ -354,11 +410,13 @@ export const ResponsiveIDCardGuideCard = ({ guide, onBookNow }) => {
               }}
               onClick={(e) => e.stopPropagation()}
             >
+              {/* RIBBON AT TOP */}
+              <GuideDetailsRibbon />
               {/* Close Button INSIDE the card, top-right */}
               <button
                 type="button"
                 onClick={() => setShowModal(false)}
-                className="absolute right-5 top-5 w-10 h-10  flex items-center justify-center rounded-full bg-[#f5f7fa] hover:bg-[#fff9e5] transition z-30"
+                className="absolute right-2 top-2 w-10 h-10 flex items-center justify-center rounded-full bg-[#f5f7fa] hover:bg-[#fff9e5] transition z-30"
                 style={{
                   border: `1.5px solid ${GOLD_BORDER}`,
                   color: GOLD,
@@ -383,9 +441,10 @@ export const ResponsiveIDCardGuideCard = ({ guide, onBookNow }) => {
                 </svg>
               </button>
               {/* Left - Profile */}
-              <div className="md:w-1/3 w-full bg-gradient-to-br from-[#fff9e5] via-[#f5f7fa] to-[#fafbfc] p-6 sm:p-8 flex flex-col items-center border-b md:border-b-0 md:border-r border-[rgba(255,180,0,0.23)] relative">
+              <div className="md:w-1/3 w-full bg-gradient-to-br from-[#fff9e5] via-[#f5f7fa] to-[#fafbfc] p-6 sm:p-8 flex flex-col items-center border-b md:border-b-0 md:border-r border-[rgba(255,180,0,0.23)] relative"
+                   style={{ minWidth: "220px", maxWidth: "100vw" }}>
                 <div className="flex flex-col items-center w-full">
-                  <div className="w-full flex justify-center">
+                  <div className="w-full flex justify-center mt-10">
                     <div className="relative rounded-xl border-2 border-[rgba(255,180,0,0.54)] bg-[#f5f7fa] w-[140px] h-[180px] sm:w-[170px] sm:h-[220px] flex items-center justify-center overflow-hidden shadow">
                       <img
                         src={guideData.profileImg}
@@ -453,23 +512,11 @@ export const ResponsiveIDCardGuideCard = ({ guide, onBookNow }) => {
                 </div>
               </div>
               {/* Right - Details */}
-              <div className="flex-1 p-5 sm:p-7 flex flex-col h-full overflow-y-auto">
-                {/* Heading with background color */}
-                <div
-                  className="mb-4 rounded-xl flex items-center gap-3 px-4 py-3"
-                  style={{
-                    background: "linear-gradient(90deg,#fff9e5 0%,#fafbfc 100%)",
-                    borderBottom: "1.5px solid #ffe680",
-                  }}
-                >
-                  <FaIdCard size={20} style={{ color: ICON_COLOR }} />
-                  <h3 className="text-base sm:text-lg font-bold text-[#0d2235] m-0">
-                    GUIDE DETAILS :
-                  </h3>
-                </div>
+              <div className="flex-1 p-5 sm:p-7 flex flex-col h-full overflow-y-auto" style={{ minWidth: 0 }}>
+                {/* (Removed old heading, replaced by ribbon) */}
 
                 {/* Responsive Details */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 mb-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 mb-3" style={{marginTop: "32px"}}>
                   <Field
                     label="Phone"
                     value={guideData.phone}
@@ -550,7 +597,7 @@ export const ResponsiveIDCardGuideCard = ({ guide, onBookNow }) => {
                           rel="noopener noreferrer"
                           className="flex items-center gap-2 text-xs px-2 py-1 rounded hover:bg-[#fff9e5] transition border border-[#ffe1a1] group"
                         >
-                          <FaCertificate style={{ color: ICON_COLOR }} size={11} />
+                          {/* <FaCertificate style={{ color: ICON_COLOR }} size={11} /> */}
                           <span className="text-[#ad7a00] truncate flex-1">
                             {file.filename || "Certificate"}
                           </span>
@@ -560,7 +607,7 @@ export const ResponsiveIDCardGuideCard = ({ guide, onBookNow }) => {
                   </div>
                 )}
                 {/* Footer stats: Bookings */}
-                <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 mt-3 items-start sm:items-center">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 mt-3 items-start sm:items-center flex-wrap">
                   {guideData.totalBookings > 0 && (
                     <Badge variant="status" className="text-xs">
                       {guideData.totalBookings} Booking
@@ -589,11 +636,12 @@ export const ResponsiveIDCardGuideCard = ({ guide, onBookNow }) => {
   );
 };
 
+// --- GRID COMPONENT ---
 export const GuideGrid = ({ guides, onBookNow }) => (
   <div className="bg-[#f5f7fa] py-12 min-h-screen">
     <div className="max-w-7xl mx-auto px-3">
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center"
+        className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center"
         initial="hidden"
         animate="visible"
         variants={{
@@ -623,6 +671,7 @@ export const GuideGrid = ({ guides, onBookNow }) => (
                 },
               },
             }}
+            className="w-full"
           >
             <ResponsiveIDCardGuideCard guide={g} onBookNow={onBookNow} />
           </motion.div>
