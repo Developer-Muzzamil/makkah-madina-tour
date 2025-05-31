@@ -1,5 +1,3 @@
-// ResponsiveIDCardGuideCard.jsx
-
 import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -276,18 +274,15 @@ export const ResponsiveIDCardGuideCard = ({ guide, onBookNow }) => {
           rounded-2xl
           p-4
           w-full
-          min-w-[180px]
-          min-h-[320px]
+          max-w-xs
           flex flex-col items-center
           cursor-pointer
           shadow-sm hover:shadow-lg transition group mx-auto
-          sm:min-w-[270px]
-          max-w-xs
-          xs:max-w-[95vw]
         `}
         style={{
           marginLeft: "auto",
           marginRight: "auto",
+          minWidth: 0,
         }}
         whileHover={{
           scale: 1.035,
@@ -639,9 +634,9 @@ export const ResponsiveIDCardGuideCard = ({ guide, onBookNow }) => {
 // --- GRID COMPONENT ---
 export const GuideGrid = ({ guides, onBookNow }) => (
   <div className="bg-[#f5f7fa] py-12 min-h-screen">
-    <div className="max-w-7xl mx-auto px-3">
+    <div className="max-w-6xl mx-auto px-2 sm:px-4">
       <motion.div
-        className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-8"
         initial="hidden"
         animate="visible"
         variants={{
@@ -672,6 +667,7 @@ export const GuideGrid = ({ guides, onBookNow }) => (
               },
             }}
             className="w-full"
+            style={{ minWidth: 0 }}
           >
             <ResponsiveIDCardGuideCard guide={g} onBookNow={onBookNow} />
           </motion.div>
