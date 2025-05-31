@@ -1084,7 +1084,7 @@ export function PopupAd() {
     // Only show once per page load (not per session)
     const timer = setTimeout(() => {
       setShow(true);
-    }, 70000); // 70 seconds delay
+    }, 55000); // 55 seconds delay
 
     return () => clearTimeout(timer);
   }, []);
